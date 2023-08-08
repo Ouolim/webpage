@@ -1,5 +1,5 @@
 header{
-    background-color: #555555 ;
+    background-color: #000000 ;
 }
 .header__container {
     height: inherit;
@@ -28,13 +28,14 @@ header{
 
 .header__about{
     width: 33%;
-    background-color: aqua;
+    background-color: #222222;
+    padding: 1em;
+    text-align: center;
 }
 
 .header__image{
     height: 15em;
     width: 15em;
-    border: 2px solid red;
 }
 
 

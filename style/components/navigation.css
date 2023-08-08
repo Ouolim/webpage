@@ -1,14 +1,13 @@
 nav{
     height: inherit;
     width: 100%;
-    border: 1px solid red;
 
 }
 
 .nav__container{
     display:flex;
     height: inherit;
-    background-color: blue;
+    background-color: #444444;
     justify-content: space-evenly;
     list-style-type: none;
     box-sizing: border-box;
@@ -22,5 +21,4 @@ nav{
     padding: 0.5em;
     text-align: center;
     vertical-align: middle;
-    border: 1px solid yellow;
 }
