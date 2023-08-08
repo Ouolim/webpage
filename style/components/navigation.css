@@ -1,0 +1,26 @@
+nav{
+    height: inherit;
+    width: 100%;
+    border: 1px solid red;
+
+}
+
+.nav__container{
+    display:flex;
+    height: inherit;
+    background-color: blue;
+    justify-content: space-evenly;
+    list-style-type: none;
+    box-sizing: border-box;
+
+}
+
+.nav_item{
+    justify-content: space-evenly;
+    margin: 0.5em;
+    height: 1.5em;
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid yellow;
+}
