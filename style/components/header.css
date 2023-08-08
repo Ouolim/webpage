@@ -1,21 +1,28 @@
-header {
+header{
+    background-color: #555555 ;
+}
+.header__container {
     height: inherit;
-    width: 100%;
-    background-color: #090b0d ;
+    width: 80%;
+
     padding: 0.5em 0.5em;
-    margin: 0;
+    margin: 0 auto;
     display:flex;
     justify-content: space-evenly;
     box-sizing: border-box;
-    border: 5px solid red;
+    border: 0;
 }
 
-@media all and (max-width: 800px) {
-    header{
+@media all and (max-width: 950px) {
+    .header__container{
         flex-direction: column;
+        align-content: center;
     }
     .header__image{
-
+        margin: 1em auto;
+    }
+    .header__about{
+        margin: 0 auto
     }
 }
 
@@ -27,6 +34,7 @@ header {
 .header__image{
     height: 15em;
     width: 15em;
+    border: 2px solid red;
 }
 
 
