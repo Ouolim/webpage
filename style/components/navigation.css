@@ -1,13 +1,12 @@
 nav{
     height: inherit;
     width: 100%;
-
 }
 
 .nav__container{
     display:flex;
     height: inherit;
-    background-color: #444444;
+    background-color: var(--secondary);
     justify-content: space-evenly;
     list-style-type: none;
     box-sizing: border-box;

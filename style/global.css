@@ -1,12 +1,25 @@
+:root {
+    --text: #f1f3f4;
+    --background: #101214;
+    --primary: #8f9ca3;
+    --secondary: #1c2022;
+    --accent: #788891;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url(../font/Raleway-VariableFont_wght.ttf);
+}
+
 * {
-    font-family: "Fira Sans Light", sans-serif;
+    font-family: myFirstFont, "Fira Sans Light", sans-serif;
     line-height: 1.4;
     padding: 0;
     margin: 0;
-    color: white;
+    color: var(--text);
 }
 
 body {
-    background-color: #111111;
+    background-color: var(--background);
     margin: 0 auto;
 }

@@ -1,5 +1,5 @@
 header{
-    background-color: #000000 ;
+    background-color: var(--background) ;
 }
 .header__container {
     height: inherit;
@@ -12,31 +12,39 @@ header{
     box-sizing: border-box;
     border: 0;
 }
-
-@media all and (max-width: 950px) {
-    .header__container{
-        flex-direction: column;
-        align-content: center;
-    }
-    .header__image{
-        margin: 1em auto;
-    }
-    .header__about{
-        margin: 0 auto
-    }
-}
-
 .header__about{
-    width: 33%;
-    background-color: #222222;
+    box-sizing: border-box;
+    width: 35em;
+    background-color: var(--secondary);
     padding: 1em;
+    margin: 0 1em;
     text-align: center;
+    border: 2px solid var(--accent);
 }
 
 .header__image{
     height: 15em;
     width: 15em;
 }
+
+
+@media all and (max-width: 950px) {
+    .header__container{
+        width: 100%;
+        flex-direction: column;
+        align-content: center;
+    }
+    .header__image{
+        margin: 1em auto;
+    }
+
+    .header__about{
+        width: 100%;
+        margin:0;
+    }
+}
+
+
 
 
 
