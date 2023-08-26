@@ -19,15 +19,24 @@ header{
     margin: 0 1em;
     text-align: center;
     border: 2px solid var(--accent);
+    font-size: 1.3em;
 }
 
 .header__image{
-    height: 10em;
-    width: 10em;
+    height: 20em;
+    width: 20em;
     margin: auto 0;
 }
 
-@media all and (max-width: 950px) {
+.header__about__cv{
+    padding: 0.5em;
+    margin: 0.5em;
+    background: var(--accent);
+}
+.header__about a{
+    text-decoration: none;
+}
+@media all and (max-width: 1200px) {
     .header__container{
         width: 100%;
         flex-direction: column;
