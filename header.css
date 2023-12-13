@@ -28,7 +28,7 @@ header{
     margin: auto 0;
 }
 
-.header__about__cv{
+#CV{
     padding: 0.5em;
     margin: 0.5em;
     background: var(--accent);

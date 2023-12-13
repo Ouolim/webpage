@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Ouolim | Homepage</title>
-    <link rel="stylesheet" href="style/global.css">
-    <link rel="stylesheet" href="style/components/header.css">
-    <link rel="stylesheet" href="style/components/navigation.css">
-    <link rel="stylesheet" href="style/components/content.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="navigation.css">
+    <link rel="stylesheet" href="content.css">
 
 </head>
 
 <body>
 <header>
     <div class="header__container">
-        <img src="img/pfp.JPG" alt="Já" class="header__image">
+        <img src="pfp.JPG" alt="Já" class="header__image">
         <div class="header__about">
             <h1> Janek Hlavatý</h1>
 
@@ -23,27 +23,48 @@
             Mimo jiné mám rád hudbu, knížky, vodní dýmky a kavárny + čajovny.
             V případě potřeby mě neváhejte kontaktovat.
 
-            <a href="file-src/cv.pdf"><div class="header__about__cv">CV</div></a>
+            <a href="cv.pdf"><div id="CV">CV</div></a>
 
         </div>
-        <img src="img/logo.svg" alt="Já" class="header__image">
+        <img src="logo.svg" alt="Já" class="header__image">
     </div>
 </header>
 <nav>
     <ul class="nav__container">
-        <a href="./"><li class="nav_item">O mě</li></a>
-        <li class="nav_item">Projekty</li>
-        <li class="nav_item">Kontakt</li>
+        <li class="nav_item"><a href="./">O mě</a></li>
+        <li class="nav_item"><a href="./signpost.html">Rozcestník</a></li>
+        <li class="nav_item"><a href="./contacts.html">Kontakt</a></li>
     </ul>
 </nav>
 
-<ul class="body__content">
-    Škola
-    <li class="body__content__item">
-    Maturita z Českého jazyka - výběr literatury
-    </li>
-</ul>
-
+<article class="body__content">
+    <section class="gifts">
+        <h2> Nápady na dárky</h2>
+        Moc nemusím dávání dárků z povinnosti. Speciálně k Vánocům mi prosím nic nekupuj.
+        Naopak velmi ocením dárek z <b>čisté</b> motivace mi udělat radost. Pokud mě přesto chceš obdarovat, můžeš
+        jako inspiraci využít následující seznam. Obsahuje věci co bych si přál a samotnému se mi nechce je kupovat.
+    </section>
+    <section>
+        <h3>Vybavení na kolej</h3>
+        Bydlím na koleji a velmi rád vařím. V seznamu se nachází vybaveni, které mi umožní vařit ještě větší lahůdky!
+        <ul>
+            <li>Mixér</li>
+            <li>Ostrý nůž</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Káva</h3>
+        <ul>
+            <li>Doubleshot</li>
+            <ul>
+                <li>Kávové předplatné</li>
+                <li>Jakákoliv filter arabica</li>
+            </ul>
+            <li>Exotická káva ze zahraničí</li>
+            <li>Cibetková káva - na ochutnání</li>
+        </ul>
+    </section>
+</article>
 
 
 </body>
