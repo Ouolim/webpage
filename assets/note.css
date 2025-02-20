@@ -1,0 +1,96 @@
+/* General Styles */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: "Inter", sans-serif;
+    line-height: 1.6;
+}
+
+a {
+    color: #80c4ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for Pandoc macros */
+.definition, .theorem, .warning, .proof, .example, .exercise {
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-left: 5px solid;
+}
+
+/* Definitions */
+.definition {
+    background-color: #1e1e2e;
+    border-color: #89b4fa;
+}
+
+/* Theorems */
+.theorem {
+    background-color: #1b292f;
+    border-color: #94e2d5;
+    font-weight: bold;
+}
+
+/* Warnings (Paradoxes, Important Notes) */
+.warning {
+    background-color: #2b1e1e;
+    border-color: #f38ba8;
+    font-weight: bold;
+}
+
+/* Proofs */
+.proof {
+    background-color: #201e2b;
+    border-color: #cba6f7;
+    font-style: italic;
+}
+
+/* Examples */
+.example {
+    background-color: #2e251b;
+    border-color: #fab387;
+}
+
+/* Exercises */
+.exercise {
+    background-color: #2e1b1b;
+    border-color: #f7768e;
+    font-weight: bold;
+}
+
+/* Code Blocks */
+pre {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.inline-math {
+    background-color: #2b2b2b;
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-size: 1.05em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #444;
+}
+
+th {
+    background-color: #2b2b2b;
+}

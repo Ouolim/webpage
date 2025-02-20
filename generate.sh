@@ -11,6 +11,6 @@ cp -r static/* docs/static/
 
 for file in notes/*.md; do
     filename=$(basename "$file" .md)
-    pandoc "$file" -s --template=templates/template.html -o "docs/content/$filename.html" --mathjax --metadata title="$file"
+    pandoc "$file" -s --lua-filter=templates/wrap_inline_math.lua --template=templates/template.html -o "docs/content/$filename.html" --mathjax --metadata title="$file"
 done
 echo "Local generation complete!"
