@@ -1,11 +1,11 @@
-name: Convert Markdown to HTML
+name: Convert Markdown to HTML and Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Change this if your default branch is different
+      - main  # Trigger this on push to the main branch
     paths:
-      - 'notes/**/*.md'  # Only run when Markdown files in 'notes' change
+      - 'notes/**/*.md'  # Only run when files in 'notes' folder change
 
 jobs:
   convert:
@@ -23,5 +23,26 @@ jobs:
           mkdir -p docs
           for file in notes/*.md; do
               filename=$(basename "$file" .md)
-              pandoc "$file" -s --template=templates/template.html -o "docs/$filename.html" --mathjax --metadata title="$file"
+              pandoc "$file" -s --template=templates/template.html -o "docs/$filename.html" --mathjax
           done
+
+      - name: Upload Generated HTML as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: html-artifact
+          path: docs/  # Upload the generated HTML files in the docs folder
+
+  deploy:
+    needs: convert
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download HTML Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: html-artifact
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Target GitHub Pages branch
+          folder: docs
