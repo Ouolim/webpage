@@ -6,14 +6,15 @@
     --accent: #788891;
 }
 
-@font-face {
+/* @font-face {
     font-family: myFirstFont;
     src: url(../static/Raleway-VariableFont_wght.ttf);
-}
+}*/
 
 * {
-    font-family: myFirstFont, "Fira Sans Light", sans-serif;
-    line-height: 1.4;
+  /*  font-family: myFirstFont, "Fira Sans Light", sans-serif;
+    */
+line-height: 1.4;
     padding: 0;
     margin: 0;
     color: var(--text);
