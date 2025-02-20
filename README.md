@@ -1,6 +1,6 @@
 # Janek Hlavatý's Personal Webpage
 
-This repository contains the source code for my's personal webpage.
+This repository contains the source code for my personal webpage.
 
 ## Building the Webpage
 Page is accessible [here](https://ouolim.github.io/webpage/)
