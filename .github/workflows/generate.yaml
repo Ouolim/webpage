@@ -21,26 +21,21 @@ jobs:
           mkdir -p docs
           for file in notes/*.md; do
               filename=$(basename "$file" .md)
-              pandoc "$file" -s --template=templates/template.html -o "docs/$filename.html" --mathjax
+              pandoc "$file" -s --template=templates/template.html -o "docs/$filename.html" --mathjax  --metadata title="$file"
           done
 
       - name: Upload Generated HTML as Artifact
-        uses: actions/upload-artifact@v4
+        uses:  actions/upload-pages-artifact@v3
         with:
-          name: html-artifact
-          path: docs/  # Upload the generated HTML files in the docs folder
+          path: docs/
 
   deploy:
-    needs: convert
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: convert
     steps:
-      - name: Download HTML Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: html-artifact
-
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages  # Target GitHub Pages branch
-          folder: docs
+        id: deployment
+        uses: actions/deploy-pages@v4
