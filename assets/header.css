@@ -28,11 +28,6 @@ header{
     margin: auto 0;
 }
 
-#CV{
-    padding: 0.5em;
-    margin: 0.5em;
-    background: var(--accent);
-}
 .header__about a{
     text-decoration: none;
 }
