@@ -84,28 +84,66 @@ Cvičení: napiš definici prázdné množiny
 	- x,y,z jsou proměnné, R je relační symbol, pak $(x=y) \implies (\forall z)(R(x,z)\iff R(y,z))$ - axiom substituce
 	- speciálně v TM za R můžeme dosadit $\in$, pak $(x=y) \implies (\forall z)(x\in y\iff y \in z)$
 	- $(x=y) \implies (\forall z)(z\in x\iff z \in y)$
-- odvozovací pravidla (intuitivně)
-	- z $\phi, \phi\implies\psi$ odvodíme $\psi$
-	- z $\psi$ odvodíme $(\forall x)\psi$
 
-## Axiomy TM - "jak se chová $\in$", "jaké množiny existují"
-- ZF teorie - 9 axiomů (7 axiomů + 2 schémata)
-- 10 axiom výběru (axiom of choice) - AC
-- ZFC = ZF + AC
+## Deduction rules (informally):
+
+- from $\psi$ and $\psi \implies \phi$, deduce $\phi$ 
+- from $\psi$ deduce $(\forall x)\psi$
+
+# Axioms of set theory:
+
+- how does the $\in$ behaves and which sets exists
+- formally 1. - 8. axioms form the Zermelo–Fraenkel theory (**ZF**) and adding the 9th axiom (Choice) creates extended theory called **ZFC**
 
 ::: definition
-1. Axiom existence množiny
-	- $(\exists x)(x=x)$ - budiž množina
-2. Axiom extenzionality
-	- $(\forall z)(z\in x\iff z\in y)\implies x=y$ - pokud mají x a y stejné prvky, rovnají se
-	- opačná implikace plyne z jednoho z axiomů rovnosti
-:::
-
-::: exercise
-Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
+1. **Axiom of existence** - "a set exitst"
+    - $\exists x: x = x$
+    - i dont fcking know why this shit is here
 :::
 
 ::: definition
-3. Schéma axiomů vydělení
-- je-li $\phi(x)$ formule, která neobsahuje volnou proměnnou $z$, poté následující formule je axiom: $()$
+2. **Axiom of extensionality** - "a set is determined by its elements"
+    - $\forall x \forall y [\forall z (z \in x \iff z \in y) \implies x = y ]$
+:::
+
+::: definition
+3. **Axiom of separation** - "we can take all elements from set that are of target properties"
+    - $\forall z \forall \omega \exists y \forall x [x \in y \iff ((x \in y) \land \psi(x, \omega, z))]$
+    - also know as Axiom of specification
+    - dissallows possibilites of self-reference and paradox connected with these problems
+    - thanks to Extensionality there exists only one such set
+    - usage: $\{x, x \in a \land \psi(x)\}$ shorter version: $\{x \in a; \psi(x)\}$
+    - definition of set operators using Separation:
+        - $a \cup b = \{x \in a; x \in b\}$
+        - $a \\ b = \{x \in a; x \notin b\}$
+        - $\emptyset = \{x \in a; x \neq x\}$ - *a* can be any set
+:::
+
+::: definition
+4. **Axiom of pairing** - "for every pair of sets *a*, *b*, there exists *z*, whose elements are exactly *a* and *b*"
+    - $\forall x \forall y \exists z ((x \in z) \land (y \in z))$
+    - Def.: **unordered pair**: simply a set of size two
+        - such as $\{a, b\}$ or $\{a, a\} = \{a\}$
+    - Def.: **ordered pair**: gradually increasing set of sets with elements from the pair
+        - example: $(a, b) = \{\{a\}, \{a, b\}\}$ 
+        - beware: $(a, a) = \{\{a\}, \{a, a\}\} = \{\{a\}, \{a\}\} = \{\{a\}\}$
+    - **lemma:** $(x, y) = (u, v) \iff (x = u \land y = v)$
+        - proof: 
+            -$(\Leftarrow)$ if $x = u$ then $\{x\} = \{u\}$ from Extensionality
+                            and if $y = v$ then $\{x, y\} = \{u, v\} \implies \{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$ 
+            - $(\Rightarrow)$ if $\{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$, then $\{x\} = \{u\}$ or $\{x\} = \{u, v\}$, either way $u = x$
+                - $\{u, v\} = \{x\}$ or $\{u, v\} = \{x, y\}$, therefore either $\{v = x\}$ or $\{v = y\}$
+                    - if $v = y$ then we're done
+                    - if $v = x$ then $v = u = x = y$ and we're done as well
+:::
+
+::: definition
+5. **Axiom of union** - "union over the elements of a set is a set"
+    - for any set of sets *F*, there is a set *A* containing every element that is a member of some member of *F*
+    - $\forall F \exists A \forall Y \forall x [(x \in Y \land Y \in F) \implies x \in A]$
+:::
+
+::: definition
+6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
+    - $\forall x \exists y \forall z (z \subseteq x \implies z \in y)$
 :::
