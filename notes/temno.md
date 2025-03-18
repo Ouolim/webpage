@@ -147,3 +147,86 @@ Cvičení: napiš definici prázdné množiny
 6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
     - $\forall x \exists y \forall z (z \subseteq x \implies z \in y)$
 :::
+
+## Lecture 3 - TBD
+
+## Lecture 4: Classes
+
+::: definition
+- X is a class then $X^1 = X$ and $X^{N+1} = X^N * X$
+:::
+
+- **observation:** $V^N \subseteq V^{N-1} \subseteq ... \subseteq V$
+
+::: definition
+- a class R is a **binary relation** if R subseteq VxV
+- a class R is a **n-ary relation** if R subseteq $V^n$
+- **xRy** is short for $(x, y) \in R$
+:::
+
+- example:
+    - relation of membership: $\in : \{(x, y), x \in y\}$
+    - relation of identity: $Id : \{(x, y), x = y\}$
+
+::: definition
+- for X a relation (or any arbitrary class), **Dom(X)** (domain) is $\{u, (\exists v), (u, v) \in X\}$
+- similary **Rng(X)** (range) is $\{v, (\exists u), (u, v) \in X\}$
+- **image** of a relation: $\{z, (\exists y), y \in Y \land (y, z) \in X\}$ - notation: X''Y
+- **restriction to Y** of a relation: $\{(y, z), y \in Y \land (y, z) \in X\}$ - notation: XreverseoneY
+:::
+
+- **lemma:** if x is a set and Y a class then Dom(x), Rng(x), xreversoneY, x''Y are sets
+- proof: $Dom(x) \subseteq U(Ux)$
+        - if u in Dom(x) ... there exists some v such that $(u, v) \in x$
+            $u \in \{u\} \in (u, v) \in x \implies \{u\} \in Ux \implies u \in U(Ux)$
+        - similarly Rng(x) in U(Ux) if v in Rng(x) then these exists: $(\exists u) (u, v) \in xRy$
+            $v \in \{u, v\} \in (u, v) \in x \implies v \in U(Ux)$
+        - by Separation XreverseoneY
+
+::: definition
+- R, S relations then $R^{-1}$ (inverse relation) is $\{(u, v), (v, u) \in R\}$
+- R, S relations then RcircleS (combination of relations) is $\{(u, w), (\exists v), (v, u) \in S\}
+:::
+
+- exercise: verify that for an aribtrary relation R we have $Id \circle R = R = R \circle Id$
+
+::: definition 
+- relation F is called a **mapping or function** if $(\forall u)(\forall v)(\forall w)(((u, v) \in F \land (u, w) \in F) \implies v = u)$
+- $\forall u \in Dom(F)$ there exists exactly one $v$ such that $(u, v) \in F''$ we write, that $F(u) = v$
+- F is a **mapping of class X to class Y** - notation: $F: X \implies Y$ if $Dom(F) = X \land Rng(F) \subseteq Y$
+- F is a **mapping of class X onto class Y** if in addition $Rng(F) = Y$
+- function $F$ is injective if $F^{-1}$ is a mapping
+- other definition of injective mapping: $(\forall u, v, w )(F(u) = w \land F(v) = w) \implies u = v$
+:::
+
+::: definition
+- **shortcut A** is a class $\phi$ formula then $(\exists x \in A) \phi$ means $(\exists x)(x \in A \land \phi)$
+- same for forall quantifier: $(\forall x \in A) \phi$ means $(\forall x)(x \in A \implies \phi)$
+- notation: image/preimage of a class X by mapping $F: F[X] = F''X$ and $F-1[X] = F-1''X$
+ = $\{y, \exists x \in X, y = F(x)\} \land \{y, \exists x \in X, x = F(y)\}$
+:::
+
+- *A* class, *a* set then $a_A$ is $\{f, f:a \implies A\}$ - class of all mappings from *a* to *A*
+- **observation:** every mapping from *a* to *A* is a set
+- note: *a* really has to be a set - we cannot define class to class mappings: $F:B \implies A$ and $B = Dom(F)$ is a proper class then *F* is a proper class
+- observation: $\emptyset$-to-Y = $\{\emptyset\}$
+- observation: x-to-$\emptyset$ = $\emptyset$
+- **lemma**: for arbitrary sets *x*, *y* the class x-to-Y is a set
+         if *x* isn't $\emptyset$, *Y* is a proper class, then x-to-Y is a proper class
+
+--- TBD
+
+## Intro to relations
+### Orderings
+- $R \subseteq VxV$, $A$ is a class, $R$ may have *various* properties on $A$:
+    - reflexive
+    - antireflexive
+    - symetric
+    - antisymetric
+    - weakly antisymetric
+    - transitive
+- find definitions on the internet
+- all these 7 properties are **hereditary** - they are inherited by subclasses
+
+
+
