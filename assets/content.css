@@ -13,10 +13,12 @@ ul{
     list-style: none;
     padding-left: 1em;
 }
+
 .body__content + .gifts li{
     padding-left: 1em;
 }
+
 .body__content li::before{
-    content: "• ";
+    content: "ඞ ";
     color: var(--accent);
 }
