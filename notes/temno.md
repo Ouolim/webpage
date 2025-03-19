@@ -87,26 +87,27 @@ Cvičení: napiš definici prázdné množiny
 
 ## Deduction rules (informally):
 
-- from $\psi$ and $\psi \implies \phi$, deduce $\phi$ 
+- from $\psi$ and $\psi \implies \phi$, deduce $\phi$
 - from $\psi$ deduce $(\forall x)\psi$
 
-# Axioms of set theory:
+::: exercise
+Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
+:::
+
+## Deduction rules (informally):
+- from $\psi$ and $\psi \implies \phi$, deduce $\phi$
+- from $\psi$ deduce $(\forall x)\psi$
+
+### Axioms of set theory:
 
 - how does the $\in$ behaves and which sets exists
 - formally 1. - 8. axioms form the Zermelo–Fraenkel theory (**ZF**) and adding the 9th axiom (Choice) creates extended theory called **ZFC**
 
-::: definition
-1. **Axiom of existence** - "a set exitst"
+1. **Axiom of existence** - "a set exists"
     - $\exists x: x = x$
     - i dont fcking know why this shit is here
-:::
-
-::: definition
 2. **Axiom of extensionality** - "a set is determined by its elements"
     - $\forall x \forall y [\forall z (z \in x \iff z \in y) \implies x = y ]$
-:::
-
-::: definition
 3. **Axiom of separation** - "we can take all elements from set that are of target properties"
     - $\forall z \forall \omega \exists y \forall x [x \in y \iff ((x \in y) \land \psi(x, \omega, z))]$
     - also know as Axiom of specification
@@ -117,33 +118,108 @@ Cvičení: napiš definici prázdné množiny
         - $a \cup b = \{x \in a; x \in b\}$
         - $a \\ b = \{x \in a; x \notin b\}$
         - $\emptyset = \{x \in a; x \neq x\}$ - *a* can be any set
-:::
 
-::: definition
 4. **Axiom of pairing** - "for every pair of sets *a*, *b*, there exists *z*, whose elements are exactly *a* and *b*"
     - $\forall x \forall y \exists z ((x \in z) \land (y \in z))$
     - Def.: **unordered pair**: simply a set of size two
         - such as $\{a, b\}$ or $\{a, a\} = \{a\}$
     - Def.: **ordered pair**: gradually increasing set of sets with elements from the pair
-        - example: $(a, b) = \{\{a\}, \{a, b\}\}$ 
+        - example: $(a, b) = \{\{a\}, \{a, b\}\}$
         - beware: $(a, a) = \{\{a\}, \{a, a\}\} = \{\{a\}, \{a\}\} = \{\{a\}\}$
     - **lemma:** $(x, y) = (u, v) \iff (x = u \land y = v)$
-        - proof: 
+        - proof:
             -$(\Leftarrow)$ if $x = u$ then $\{x\} = \{u\}$ from Extensionality
                             and if $y = v$ then $\{x, y\} = \{u, v\} \implies \{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$ 
             - $(\Rightarrow)$ if $\{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$, then $\{x\} = \{u\}$ or $\{x\} = \{u, v\}$, either way $u = x$
                 - $\{u, v\} = \{x\}$ or $\{u, v\} = \{x, y\}$, therefore either $\{v = x\}$ or $\{v = y\}$
                     - if $v = y$ then we're done
                     - if $v = x$ then $v = u = x = y$ and we're done as well
-:::
-
-::: definition
 5. **Axiom of union** - "union over the elements of a set is a set"
-    - for any set of sets *F*, there is a set *A* containing every element that is a member of some member of *F*
-    - $\forall F \exists A \forall Y \forall x [(x \in Y \land Y \in F) \implies x \in A]$
+    - for any set of sets F \{\displaystyle \{\mathcal \{F\}\}\}, there is a set A \{\displaystyle A\} containing every element that is a member of some member of F \{\displaystyle \{\mathcal \{F\}\}\}
+    - $\forall \mathcall\{F\} \exists A \forall Y \forall x [(x \in Y \land Y \in mathcal\{F\}) \imples x \in A]$
+6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
+    - $\forall x \exists y \forall z (z \subsetq x \implies z \in y)$
+
+
+HERE INSERT HONZA 3
+
+Janek 4
+
+# Relations
+
+:::definition
+$x<=_R y$ means $(x,y) \in R$
+
+Ordering $R$ is linear (on A) if $R$ is a trichotmic relation (on $A$). That means that every pair of elements in $A$ is comparable.
 :::
 
-::: definition
-6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
-    - $\forall x \exists y \forall z (z \subseteq x \implies z \in y)$
+$R'$ is a strict ordering (ostré uspořádání) if $R'$ is of the form
+$R - Id$ where R is an ordering.
+
+- it becomes antireflexive, antisymmetric and transitive.
+- antisymmetric is implied from the other two.
+
+$x <_{R} y$ means $(x,y) \in R$
+
+Examples of ordering
+- (natural numbers, <=)
+- (V, inclusion <=)
+- (natural numbers, |)
+- (R^2 (complex numbers), <=_{lex})
+
+:::definiton
+R is an ordering on class A, let X \subsetq A
+We say that a \in A is (with respect to R and A)
+- majaorant (upper bound) - majoranta, horní mez
+of the class X if $(\forall x in X)(x \in_r a)$
+- maximal element of X iff a \in X A(\forall x in X)(\not a <_R x)
+(maximální prvek)
+- maximum element (largest) of X if $a \in X$ and a is a majorant
+(největší)
+- supremum of X if a is the smallest element of the class of all majorants of X
+- smallest defined symetrically
+
+- minorant, minimal element, minumum element, infimum
 :::
+
+:::observation
+maxium -> maximal, if R is linear, maximal -> maximum and there is at most one maximal
+there is alwats at most one maximum and at most one supremum
+:::
+
+notation
+a = max_R(X)
+a = sup_r(X)
+
+X is bounded from above in A if there exists a majorant of X in A, similart from below (sdola)
+(shora omezená)
+X is lower set in A if (\forall x \in X)(\forall y \in A)(y <=_r x \implies y \in X) "with every element it containt all smaller elements"
+(dolní množina)
+- x \in A, then (\implies, x] is {y, y\in A \and y <=_R x} - principal ideal determined by x
+
+:::observation
+R is an ordering on A, then for arbitrary x, y \in A we have x <=_R y \eqv (\implies, y] \subsetq [\implies, y]
+:::
+
+remark construction of R from Q: Dedekind's cuts:
+x \subsetq : X is a lower set with respect to classical ordering and if sup(x) exists then sup(X) \in X
+for example Q prunik s (-inf, q) is not a ded. cut
+Q prunik s (-inf, q] is a ded. cut
+Q prunik s (-inf, square root of 2] is a ded. cut
+
+:::definition
+ordering R on class A is a well-ordering (dobré) if
+every nonempty subset of A has a smallest element with respect to R
+:::
+
+Exercise: weire this definition using a formula
+observation: well ordering is a hereditary property (IF b \subsetq A then R is well ordering also on B)
+Observation: every well ordering is linear
+
+exercise: find some sets on which E sjednoceno Id is a Well ordering
+
+
+Comparing cardinalities
+(mohutnost)
+Set x has cardinality smaller than or equal to the cardinalty of Y, x <= y if there exists and indective mapping of x into y
+
