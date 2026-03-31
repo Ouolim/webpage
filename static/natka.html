@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maturitní četba – Procvičování</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #58a6ff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0.7;
+  }
+
+  /* Book header */
+  #book-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  #book-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e6edf3;
+    line-height: 1.2;
+  }
+  #book-author {
+    font-size: 1.1rem;
+    color: #58a6ff;
+    margin-top: 6px;
+  }
+
+  /* Controls */
+  #controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  button:hover { background: #1f2730; border-color: #58a6ff; color: #58a6ff; }
+  button:active { background: #1f6feb22; }
+
+  #progress {
+    font-size: 0.9rem;
+    color: #8b949e;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* Column selectors */
+  #selectors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .sel-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #8b949e;
+    transition: border-color 0.15s, color 0.15s;
+    user-select: none;
+  }
+  .sel-label:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .sel-label input { accent-color: #58a6ff; }
+  .sel-label.active { border-color: #1f6feb; color: #58a6ff; background: #1f6feb18; }
+
+  /* Keyboard hint */
+  #kb-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #484f58;
+    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+  }
+  #kb-hint kbd {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.7rem;
+    color: #8b949e;
+  }
+
+  /* Cards grid */
+  #cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Flashcard */
+  .card-wrap {
+    perspective: 800px;
+    height: 180px;
+    cursor: pointer;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  }
+  .card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .card-front {
+    background: #161b22;
+    border: 1px solid #30363d;
+  }
+  .card-front:hover { border-color: #1f6feb; }
+  .card-num {
+    font-size: 0.7rem;
+    color: #484f58;
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .card-field-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #58a6ff;
+  }
+  .card-hint {
+    font-size: 0.72rem;
+    color: #484f58;
+    margin-top: 10px;
+  }
+
+  .card-back {
+    background: #0f1923;
+    border: 1px solid #1f6feb;
+    transform: rotateY(180deg);
+  }
+  .card-back-content {
+    font-size: 0.92rem;
+    color: #e6edf3;
+    line-height: 1.5;
+  }
+
+  /* Author card – full width, taller */
+  #author-section {
+    max-width: 1100px;
+    margin: 16px auto 0;
+  }
+  .author-card-wrap {
+    perspective: 1200px;
+    height: auto;
+    min-height: 200px;
+    cursor: pointer;
+  }
+  .author-card-inner {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  }
+  .author-card-wrap.flipped .author-card-inner { transform: rotateY(180deg); }
+
+  .author-face {
+    border-radius: 12px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    padding: 28px 32px;
+  }
+  .author-front {
+    background: #161b22;
+    border: 1px solid #30363d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 200px;
+  }
+  .author-front:hover { border-color: #1f6feb; }
+  .author-back {
+    background: #0f1923;
+    border: 1px solid #1f6feb;
+    transform: rotateY(180deg);
+  }
+  .author-back-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .author-back-item strong {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #58a6ff;
+    margin-bottom: 4px;
+  }
+  .author-back-item span {
+    font-size: 0.9rem;
+    color: #e6edf3;
+    line-height: 1.5;
+  }
+  #author-label {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+  }
+  #author-divider {
+    border: none;
+    border-top: 1px solid #21262d;
+    margin: 24px auto 16px;
+    max-width: 1100px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Maturitní četba</h1>
+
+<div id="book-header">
+  <div id="book-title"></div>
+  <div id="book-author"></div>
+</div>
+
+<div id="controls">
+  <button id="btn-prev">← Předchozí</button>
+  <span id="progress"></span>
+  <button id="btn-next">Další →</button>
+  <button id="btn-shuffle">⇄ Zamíchat</button>
+  <button id="btn-flip-all">Otočit vše</button>
+</div>
+
+<div id="selectors"></div>
+
+<div id="kb-hint">
+  <kbd>←</kbd> <kbd>→</kbd> navigace &nbsp;|&nbsp;
+  <kbd>Space</kbd> další &nbsp;|&nbsp;
+  <kbd>S</kbd> zamíchat &nbsp;|&nbsp;
+  <kbd>A</kbd> otočit vše &nbsp;|&nbsp;
+  <kbd>1</kbd>–<kbd>5</kbd> otočit kartu &nbsp;|&nbsp; <kbd>6</kbd> o autorovi
+</div>
+
+<div id="cards-grid"></div>
+
+<hr id="author-divider">
+<div id="author-label">
+  <label class="sel-label" id="author-toggle-label">
+    <input type="checkbox" id="cb-autor" checked> O autorovi
+  </label>
+</div>
+<div id="author-section"></div>
+
+<script>
+const BOOKS = [
+  {
+    title: "Maryša",
+    author: "Alois a Vilém Mrštíkové",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Tragédie",
+    tema: "Ukázka poměrů na venkově, střet milostného citu s penězi a předsudky; svatba, neštěstí, láska",
+    casoprostor: "Konec 19. století, konkrétně rok 1886, moravská vesnice",
+    kompozice: "5 dějství, chronologický děj",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "Bílá nemoc",
+    author: "Karel Čapek",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Tragédie",
+    tema: "Varování před válkou a její nesmyslností; nemoc, lék, strach, moc",
+    casoprostor: "Smyšlená země připomínající Německo, v čase před vypuknutím ozbrojeného konfliktu",
+    kompozice: "Chronologický děj, předmluva a 3 akty odehrávající se na 14 obrazech",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "R.U.R.",
+    author: "Karel Čapek",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Tragédie",
+    tema: "Zkáza lidstva způsobená příliš vyspělou technikou; vynálezy, moc, stvoření, varování",
+    casoprostor: "Rossumův ostrov (továrna na roboty), mezi předehrou a prvním dějstvím uplyne 10 let",
+    kompozice: "Chronologický děj, předehra a 3 dějství",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "Král Oidipus",
+    author: "Sofokles",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Tragédie",
+    tema: "Nevyhnutelnost osudu, proroctví a hledání pravdy o vlastním životě; slepota, sebevražda, incest, věštba",
+    casoprostor: "Starověké Řecko, před palácem v Thébach",
+    kompozice: "Chronologická, v dialozích se retrospektivně odkrývá minulost",
+    promluvy: "Dialogy, monology, úvahy; přímá řeč"
+  },
+  {
+    title: "Romeo a Julie",
+    author: "William Shakespeare",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Tragédie",
+    tema: "Nešťastná láska dvou milenců pocházejících ze znepřátelených rodů; svár, smrt, nenávist, spory",
+    casoprostor: "Italské město Verona, 16. století",
+    kompozice: "Chronologická, 5 dějství",
+    promluvy: "Dialogy, monology; přímá řeč, řečnické otázky"
+  },
+  {
+    title: "Lakomec",
+    author: "Molière",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Komedie",
+    tema: "Lidská chamtivost a lakota, která deformuje charakter člověka; peníze, touha po majetku, láska, krádež",
+    casoprostor: "Paříž roku 1670, v domě Harpagonově",
+    kompozice: "5 dějství, chronologický děj",
+    promluvy: "Dialogy, monology, řečnické otázky; přímá řeč"
+  },
+  {
+    title: "Revizor",
+    author: "Nikolaj Vasiljevič Gogol",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Komedie",
+    tema: "Kritika tehdejší ruské společnosti, zkaženost byrokracie; lež, pomluva, hloupost, strach z kontroly",
+    casoprostor: "Malé ruské městečko, během 24 hodin, 30. léta 19. století",
+    kompozice: "5 dějství, chronologický děj",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "Strakonický dudák",
+    author: "Josef Kajetán Tyl",
+    druh: "Drama",
+    forma: "Drama",
+    zanr: "Pohádková hra",
+    tema: "Boj lásky s lidskou chamtivostí a svobodou; vlast, přátelství, hudba",
+    casoprostor: "19. století, jihočeská krajina – Strakonice a okolí",
+    kompozice: "Chronologická, 3 jednání a celkem 44 výstupů",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "Malý princ",
+    author: "Antoine de Saint-Exupéry",
+    druh: "Epika",
+    forma: "Próza, ich-forma a er-forma",
+    zanr: "Pohádka (filosofická)",
+    tema: "Střet dětského světa se světem dospělých; liška, přátelství, láska, zodpovědnost",
+    casoprostor: "Přibližně 20. století, Sahara a 7 různých planet",
+    kompozice: "Úvod a závěr chronologicky, střední část retrospektivní; 27 kapitol",
+    promluvy: "Dialogy, monology; přímá řeč, nepřímá řeč, polopřímá řeč"
+  },
+  {
+    title: "Petr a Lucie",
+    author: "Romain Rolland",
+    druh: "Epika",
+    forma: "Próza, er-forma (vševědoucí vypravěč)",
+    zanr: "Protiválečná novela",
+    tema: "Příběh tragické lásky dvou mladých lidí za 1. světové války; láska, válka, Paříž, smrt, kontrast",
+    casoprostor: "Od 20. ledna do 29. března 1918, Paříž (1. světová válka)",
+    kompozice: "Chronologická, 15 kapitol",
+    promluvy: "Dialogy, monology; přímá řeč, nepřímá řeč, polopřímá řeč"
+  },
+  {
+    title: "Farma zvířat",
+    author: "George Orwell",
+    druh: "Epika",
+    forma: "Próza, er-forma (vševědoucí vypravěč)",
+    zanr: "Antiutopický (alegorický) román",
+    tema: "Kritika totalitních režimů; revoluce, nadvláda, lži, manipulace, totalita",
+    casoprostor: "Anglická farma, cca 30.–50. léta 20. století (čas neurčen přesně)",
+    kompozice: "Chronologický děj, 10 kapitol",
+    promluvy: "Dialogy, monology; přímá řeč, nepřímá řeč"
+  },
+  {
+    title: "1984",
+    author: "George Orwell",
+    druh: "Epika",
+    forma: "Próza, er-forma (vševědoucí vypravěč)",
+    zanr: "Antiutopický román",
+    tema: "Manipulace a absolutní kontrola nad lidským myšlením, varování před totalitním režimem; dohled, lži, revoluce",
+    casoprostor: "Londýn, hlavní město provincie Oceánie, rok 1984 (alternativní budoucnost)",
+    kompozice: "Chronologický děj s retrospektivními vzpomínkami, 3 hlavní části",
+    promluvy: "Dialogy, monology; přímá řeč, polopřímá řeč"
+  },
+  {
+    title: "Deník Anny Frankové",
+    author: "Anna Franková",
+    druh: "Epika",
+    forma: "Próza, ich-forma (vypráví Anna)",
+    zanr: "Autobiografický deník",
+    tema: "Život a pocity dospívající dívky skrývající se před nacisty za 2. světové války; emigrace, přátelství, láska, strach",
+    casoprostor: "Amsterdam, zadní trakt domu, 1942–1944",
+    kompozice: "Chronologická, text tvoří dopisy (Kitty jako imaginární kamarádka)",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "Krysař",
+    author: "Viktor Dyk",
+    druh: "Epika",
+    forma: "Próza, er-forma (vševědoucí vypravěč)",
+    zanr: "Novela",
+    tema: "Příběh krysaře čistícího město od krys; píšťala, smrt, nešťastná láska, propast",
+    casoprostor: "Německé město Hameln a hora Koppel, středověk (13. století)",
+    kompozice: "Chronologický děj, 26 krátkých kapitol",
+    promluvy: "Dialogy, monology; přímá řeč, nepřímá řeč"
+  },
+  {
+    title: "Ostře sledované vlaky",
+    author: "Bohumil Hrabal",
+    druh: "Epika",
+    forma: "Próza, ich-forma (vypráví Miloš Hrma)",
+    zanr: "Novela",
+    tema: "Život na malé železniční stanici a problémy s dospíváním na pozadí 2. světové války; dospívání, hrdost, odboj",
+    casoprostor: "Malá železniční stanice v protektorátu Čechy a Morava, začátek roku 1945",
+    kompozice: "Chronologický děj s občasnými retrospektivními vzpomínkami",
+    promluvy: "Dialogy, monology; přímá řeč"
+  },
+  {
+    title: "Kuře melancholik",
+    author: "Josef Stejskal",
+    druh: "Epika",
+    forma: "Próza, er-forma (vševědoucí vypravěč)",
+    zanr: "Novela",
+    tema: "Tragický osud malého dítěte a kuřete; člověk a zvíře, smrt, utrpení, nenávist",
+    casoprostor: "Konec 19. století, venkovský statek v Čechách, několik týdnů",
+    kompozice: "Chronologický děj",
+    promluvy: "Dialogy, monology; přímá řeč, nepřímá řeč"
+  },
+  {
+    title: "Proměna",
+    author: "Franz Kafka",
+    druh: "Epika",
+    forma: "Próza, er-forma (vševědoucí vypravěč)",
+    zanr: "Novela",
+    tema: "Proměna člověka v hmyz a reakce jeho rodiny; odcizení, úzkost, práce, strach, vina",
+    casoprostor: "Byt rodiny Samsových na počátku 20. století",
+    kompozice: "Chronologický děj s retrospektivními vzpomínkami, 3 kapitoly",
+    promluvy: "Dialogy, monology; přímá řeč, nepřímá řeč"
+  },
+  {
+    title: "Máj",
+    author: "Karel Hynek Mácha",
+    druh: "Lyricko-epický",
+    forma: "Poezie, er-forma a ich-forma v závěru",
+    zanr: "Lyricko-epická báseň",
+    tema: "Tragédie mladé lásky, propojená s májovou přírodní lyrikou a úvahou o smyslu života a smrti; smrt, osud, věčnost, příroda",
+    casoprostor: "Okolí hradu Bezděz, Máchovo jezero, měsíc máj, neurčená doba",
+    kompozice: "4 zpěvy, 2 intermezza; nejčastěji obkročný rým (ABBA)",
+    promluvy: "Monolog, přímá řeč"
+  },
+  {
+    title: "Král Lávra",
+    author: "Karel Havlíček Borovský",
+    druh: "Lyricko-epický",
+    forma: "Poezie",
+    zanr: "Satirická básnická skladba",
+    tema: "Snaha utajit nedostatky, kritika hlouposti a tyranství; strach, tajemství, mateřská láska",
+    casoprostor: "Irsko, neurčitý čas",
+    kompozice: "Chronologický děj",
+    promluvy: "Monolog; přímá řeč"
+  },
+  {
+    title: "Těžká hodina",
+    author: "Jiří Wolker",
+    druh: "Lyricko-epický",
+    forma: "Poezie",
+    zanr: "Básnická sbírka",
+    tema: "Důsledky války a nezbytnost revoluční změny; srdce, ruce, město, továrna, krev",
+    casoprostor: "Neurčeno, sociální prostředí počátku 20. století",
+    kompozice: "22 básní (z toho 3 sociální balady); střídavý rým (ABAB) a sdružený rým (AABB)",
+    promluvy: "Dialogy, monology; přímá řeč"
+  }
+];
+
+const AUTHORS = {
+  "Alois a Vilém Mrštíkové": {
+    zivot: "Alois (1861–1925) a Vilém (1863–1912) Mrštíkové – čeští bratři, prozaici a dramatici",
+    narodnost: "Česká",
+    smer: "Kritický realismus s prvky naturalismu",
+    obdobi: "Konec 19. – začátek 20. století",
+    dalsiDila: "Vilém: Pohádka máje (román); Alois: Santa Lucia (román)",
+    kontext: "Spolupracovali při psaní Maryši; Vilém se věnoval hlavně próze, Alois dramatice a povídkám. Vilém zemřel mladý, Alois pokračoval v tvorbě sám."
+  },
+  "Karel Čapek": {
+    zivot: "1890–1938, český spisovatel, novinář a dramatik",
+    narodnost: "Česká",
+    smer: "Demokratický humanismus, pragmatismus, sci-fi",
+    obdobi: "1. polovina 20. století (meziválečná literatura)",
+    dalsiDila: "Válka s Mloky, Továrna na Absolutno, Hovory s TGM, Povídky z jedné a druhé kapsy",
+    kontext: "Bratr malíře Josefa Čapka. Vymyslel slovo 'robot' (z R.U.R.). Blízký přítel T. G. Masaryka. Zemřel krátce po Mnichovu, těsně před plánovaným zatčením gestapem."
+  },
+  "Sofokles": {
+    zivot: "cca 497–406 př. n. l., starořecký dramatik",
+    narodnost: "Řecká (antika)",
+    smer: "Antická tragédie",
+    obdobi: "5. století př. n. l.",
+    dalsiDila: "Antigona, Élektra, Filoktétés",
+    kontext: "Jeden ze tří velkých řeckých tragiků (spolu s Aischylem a Euripidem). Zavedl třetího herce na scénu a zkrátil sbor. Napsal přes 120 her, dochovalo se 7."
+  },
+  "William Shakespeare": {
+    zivot: "1564–1616, anglický dramatik a básník",
+    narodnost: "Anglická",
+    smer: "Renesanční humanismus",
+    obdobi: "Alžbětinská éra (přelom 16.–17. stol.)",
+    dalsiDila: "Hamlet, Othello, Macbeth, Sen noci svatojánské, Kupec benátský",
+    kontext: "Spolumajitel divadla Globe v Londýně. Psal tragedie, komedie i historické hry. Považován za největšího dramatika světové literatury. Jeho díla jsou nejhranějšími divadelními kusy světa."
+  },
+  "Molière": {
+    zivot: "1622–1673, francouzský dramatik a herec (vl. jm. Jean-Baptiste Poquelin)",
+    narodnost: "Francouzská",
+    smer: "Klasicismus",
+    obdobi: "17. století",
+    dalsiDila: "Tartuffe, Misantrop, Zdravý nemocný",
+    kontext: "Oblíbenec krále Ludvíka XIV. Zemřel na jevišti při představení. Jeho komedie satiricky útočí na pokrytectví, chamtivost a fanatismus. Zakladatel moderní francouzské komedie."
+  },
+  "Nikolaj Vasiljevič Gogol": {
+    zivot: "1809–1852, ruský spisovatel ukrajinského původu",
+    narodnost: "Ruská (ukrajinský původ)",
+    smer: "Kritický realismus",
+    obdobi: "1. polovina 19. století",
+    dalsiDila: "Mrtvé duše, Plášť, Nos, Taras Bulba",
+    kontext: "Zakladatel kritického realismu v ruské literatuře. Jeho díla jsou plná groteskní satiry byrokracie a lidských slabostí. Trpěl psychickými problémy, v pozdním věku spálil 2. díl Mrtvých duší."
+  },
+  "Josef Kajetán Tyl": {
+    zivot: "1808–1856, český dramatik, prozaik a herec",
+    národnost: "Česká",
+    smer: "Národní obrození, romantismus",
+    obdobi: "1. polovina 19. století",
+    dalsiDila: "Fidlovačka (obsahuje píseň Kde domov můj), Tvrdohlavá žena",
+    kontext: "Autor slov české národní hymny (Kde domov můj). Ředitel divadelní společnosti. Jeden z nejvýraznějších představitelů českého divadla v době národního obrození."
+  },
+  "Antoine de Saint-Exupéry": {
+    zivot: "1900–1944, francouzský spisovatel a pilot",
+    narodnost: "Francouzská",
+    smer: "Filozofická próza, existencialismus",
+    obdobi: "1. polovina 20. století",
+    dalsiDila: "Noční let, Země lidí, Válečný pilot",
+    kontext: "Vojenský letec, zmizel při průzkumném letu za 2. světové války. Malý princ byl napsán v exilu v New Yorku. Téma zodpovědnosti a lidství prolíná celé jeho dílo."
+  },
+  "Romain Rolland": {
+    zivot: "1866–1944, francouzský spisovatel a pacifista",
+    narodnost: "Francouzská",
+    smer: "Kritický realismus, pacifismus",
+    obdobi: "Přelom 19.–20. století",
+    dalsiDila: "Jan Kryštof (10dílný románový cyklus), Dobrý člověk Jan",
+    kontext: "Nositel Nobelovy ceny za literaturu (1915). Otevřený odpůrce 1. světové války. Přátelil se s Freudem a Gándhím. Dílo Petr a Lucie napsal jako přímou reakci na hrůzy války."
+  },
+  "George Orwell": {
+    zivot: "1903–1950, britský spisovatel a esejista (vl. jm. Eric Arthur Blair)",
+    narodnost: "Britská (narozen v Indii)",
+    smer: "Antiutopie, demokratický socialismus",
+    obdobi: "1. polovina 20. století",
+    dalsiDila: "Čest přijít na dno (Hold to Catalonia), Barmské dny",
+    kontext: "Bojoval v Španělské občanské válce. Kritik stalinismu i fašismu. Farma zvířat mu přinesla světovou slávu. 1984 napsal nemocný na tuberkulózu a zemřel rok po jeho vydání."
+  },
+  "Anna Franková": {
+    zivot: "1929–1945, německo-židovská dívka narozená ve Frankfurtu, zemřela v Bergen-Belsenu",
+    narodnost: "Německo-židovská (žila v Amsterdamu)",
+    smer: "Autobiografická literatura, svědectví holokaustu",
+    obdobi: "2. světová válka",
+    dalsiDila: "Pouze deník (vydaný posmrtně jejím otcem Ottou Frankem)",
+    kontext: "Ukrývala se s rodinou 2 roky v zadním traktu domu v Amsterdamu. Prozrazena, odvlečena do koncentračních táborů. Zemřela v 15 letech na tyfus. Deník se stal jedním z nejčtenějších svědectví o holokaustu."
+  },
+  "Viktor Dyk": {
+    zivot: "1877–1931, český básník, prozaik a politik",
+    narodnost: "Česká",
+    smer: "Anarchismus, buřičství, generace 90. let",
+    obdobi: "Přelom 19.–20. století",
+    dalsiDila: "Milá sedmi loupežníků (báseň), Zmoudření Dona Quijota",
+    kontext: "Člen skupiny anarchistických buřičů. Politicky aktivní – senátor. Zemřel při koupání v Jadranu. Krysař čerpá ze středověké německé legendy a zobrazuje egoismus společnosti."
+  },
+  "Bohumil Hrabal": {
+    zivot: "1914–1997, český prozaik",
+    narodnost: "Česká",
+    smer: "Existencialismus, magický realismus, pábení",
+    obdobi: "2. polovina 20. století",
+    dalsiDila: "Příliš hlučná samota, Postřižiny, Obsluhoval jsem anglického krále",
+    kontext: "Pracoval jako výpravčí, hutník, balič starého papíru – zkušenosti promítal do díla. Vytvořil vlastní styl 'pábení' – proud řeči prostých lidí. Zemřel pádem z okna nemocnice."
+  },
+  "Josef Stejskal": {
+    zivot: "1838–1907, český prozaik",
+    narodnost: "Česká",
+    smer: "Naturalismus, česká venkovská próza",
+    obdobi: "2. polovina 19. století",
+    dalsiDila: "Drobné prózy s venkovskou tematikou",
+    kontext: "Představitel českého literárního naturalismu. Kuře melancholik je jeho nejznámější dílo, oceňované pro citlivé zobrazení vztahu člověka a zvířete a krutosti venkovského života."
+  },
+  "Franz Kafka": {
+    zivot: "1883–1924, pražský německy píšící spisovatel",
+    narodnost: "Česká (německy píšící Žid z Prahy)",
+    smer: "Expresionismus, existencialismus",
+    obdobi: "Přelom 19.–20. století",
+    dalsiDila: "Proces, Zámek, Amerika (In der Strafkolonie)",
+    kontext: "Pracoval jako pojišťovací úředník. Většinu děl vydal posmrtně přítel Max Brod (proti Kafkovu přání). Témata: odcizení, vina, bezmoc vůči systému. 'Kafkovský' = označení pro absurdní byrokratické situace."
+  },
+  "Karel Hynek Mácha": {
+    zivot: "1810–1836, český básník a prozaik",
+    narodnost: "Česká",
+    smer: "Romantismus – první a nejvýznamnější představitel v české literatuře",
+    obdobi: "1. polovina 19. století (národní obrození)",
+    dalsiDila: "Cikáni (próza), Márinka (próza), deníky a zápisníky",
+    kontext: "Zemřel ve 26 letech na zápal plic. Máj byl zpočátku odmítán jako příliš pesimistický. Dnes považován za vrchol české romantické poezie. Miloval pěší turistiku – cestu do Bezděze uskutečnil pěšky."
+  },
+  "Karel Havlíček Borovský": {
+    zivot: "1821–1856, český spisovatel, novinář a politik",
+    narodnost: "Česká",
+    smer: "Realismus, politická satira",
+    obdobi: "1. polovina 19. století",
+    dalsiDila: "Epigramy, Křest sv. Vladimíra (satirická báseň), Tyrolské elegie",
+    kontext: "Průkopník české žurnalistiky. Kritizoval rakouský absolutismus, za což byl deportován do Brixenu (Tyrolsko). Po návratu záhy zemřel na tuberkulózu. Symbol statečného odporu vůči moci."
+  },
+  "Jiří Wolker": {
+    zivot: "1900–1924, český básník",
+    narodnost: "Česká",
+    smer: "Proletářská poezie, poetismus",
+    obdobi: "Meziválečná literatura (20. léta 20. stol.)",
+    dalsiDila: "Host do domu (první sbírka), sociální balady (Balada o očích topičových, Balada o nenarozeném dítěti)",
+    kontext: "Zemřel ve 24 letech na tuberkulózu. Považován za nejtalentovanějšího básníka své generace. Sbírka Těžká hodina vyšla posmrtně. Přes krátký život zanechal výraznou stopu v české poezii."
+  }
+};
+
+const FIELDS = [
+  { key: 'druzFormaZanr', label: 'Druh / Forma / Žánr', keys: ['druh','forma','zanr'], defaultOn: true },
+  { key: 'tema',          label: 'Téma + Motiv',         keys: ['tema'],              defaultOn: false },
+  { key: 'casoprostor',   label: 'Časoprostor',           keys: ['casoprostor'],       defaultOn: false },
+  { key: 'kompozice',     label: 'Kompoziční výstavba',   keys: ['kompozice'],         defaultOn: false },
+  { key: 'promluvy',      label: 'Vypravěčské způsoby',   keys: ['promluvy'],          defaultOn: false },
+];
+
+// State
+let order = [...Array(BOOKS.length).keys()];
+let currentIdx = 0;
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function activeFields() {
+  return FIELDS.filter(f => {
+    const cb = document.getElementById('cb-' + f.key);
+    return cb && cb.checked;
+  });
+}
+
+function renderBook() {
+  const book = BOOKS[order[currentIdx]];
+  document.getElementById('book-title').textContent = book.title;
+  document.getElementById('book-author').textContent = book.author;
+  document.getElementById('progress').textContent = `${currentIdx + 1} / ${BOOKS.length}`;
+  renderCards();
+  renderAuthorCard();
+}
+
+function renderAuthorCard() {
+  const section = document.getElementById('author-section');
+  const cb = document.getElementById('cb-autor');
+  const divider = document.getElementById('author-divider');
+  const labelEl = document.getElementById('author-label');
+
+  if (!cb.checked) {
+    section.innerHTML = '';
+    divider.style.display = 'none';
+    labelEl.style.display = 'none';
+    return;
+  }
+  divider.style.display = '';
+  labelEl.style.display = '';
+
+  const book = BOOKS[order[currentIdx]];
+  const info = AUTHORS[book.author];
+
+  if (!info) {
+    section.innerHTML = '';
+    return;
+  }
+
+  const fields = [
+    { label: 'Život / Roky',      val: info.zivot },
+    { label: 'Národnost',         val: info.narodnost },
+    { label: 'Literární směr',    val: info.smer },
+    { label: 'Období',            val: info.obdobi },
+    { label: 'Další díla',        val: info.dalsiDila },
+    { label: 'Kontext',           val: info.kontext },
+  ];
+
+  const itemsHtml = fields.map(f => `
+    <div class="author-back-item">
+      <strong>${f.label}</strong>
+      <span>${f.val}</span>
+    </div>`).join('');
+
+  section.innerHTML = `
+    <div class="author-card-wrap" id="author-card">
+      <div class="author-card-inner">
+        <div class="author-face author-front">
+          <div class="card-num">O autorovi</div>
+          <div class="card-field-name">${book.author}</div>
+          <div class="card-hint">klikni pro otočení</div>
+        </div>
+        <div class="author-face author-back">
+          <div class="author-back-grid">${itemsHtml}</div>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('author-card').addEventListener('click', function() {
+    this.classList.toggle('flipped');
+  });
+}
+
+function renderCards() {
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = '';
+  const fields = activeFields();
+  fields.forEach((field, i) => {
+    const book = BOOKS[order[currentIdx]];
+    const answer = field.keys.map(k => {
+      const labels = { druh: 'Druh', forma: 'Forma', zanr: 'Žánr' };
+      if (field.keys.length > 1) return `<strong>${labels[k] || k}:</strong> ${book[k]}`;
+      return book[k];
+    }).join('<br>');
+
+    const wrap = document.createElement('div');
+    wrap.className = 'card-wrap';
+    wrap.dataset.index = i;
+    wrap.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">${i + 1}</div>
+          <div class="card-field-name">${field.label}</div>
+          <div class="card-hint">klikni pro otočení</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-back-content">${answer}</div>
+        </div>
+      </div>`;
+    wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+    grid.appendChild(wrap);
+  });
+}
+
+function buildSelectors() {
+  const container = document.getElementById('selectors');
+  FIELDS.forEach(f => {
+    const label = document.createElement('label');
+    label.className = 'sel-label' + (f.defaultOn ? ' active' : '');
+    label.innerHTML = `<input type="checkbox" id="cb-${f.key}" ${f.defaultOn ? 'checked' : ''}> ${f.label}`;
+    const cb = label.querySelector('input');
+    cb.addEventListener('change', () => {
+      label.classList.toggle('active', cb.checked);
+      renderCards();
+    });
+    container.appendChild(label);
+  });
+}
+
+function flipAll() {
+  const cards = [...document.querySelectorAll('.card-wrap, .author-card-wrap')];
+  const anyUnflipped = cards.some(c => !c.classList.contains('flipped'));
+  cards.forEach(c => c.classList.toggle('flipped', anyUnflipped));
+}
+
+function go(delta) {
+  currentIdx = (currentIdx + delta + BOOKS.length) % BOOKS.length;
+  renderBook();
+}
+
+// Init
+buildSelectors();
+renderBook();
+
+// Author card toggle
+const authorCb = document.getElementById('cb-autor');
+const authorToggleLabel = document.getElementById('author-toggle-label');
+authorToggleLabel.classList.add('active');
+authorCb.addEventListener('change', () => {
+  authorToggleLabel.classList.toggle('active', authorCb.checked);
+  renderAuthorCard();
+});
+
+document.getElementById('btn-prev').addEventListener('click', () => go(-1));
+document.getElementById('btn-next').addEventListener('click', () => go(1));
+document.getElementById('btn-shuffle').addEventListener('click', () => {
+  shuffle(order);
+  currentIdx = 0;
+  renderBook();
+});
+document.getElementById('btn-flip-all').addEventListener('click', flipAll);
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  else if (e.key === 'ArrowLeft') go(-1);
+  else if (e.key === 's' || e.key === 'S') {
+    shuffle(order); currentIdx = 0; renderBook();
+  }
+  else if (e.key === 'a' || e.key === 'A') flipAll();
+  else if (e.key >= '1' && e.key <= '5') {
+    const idx = parseInt(e.key) - 1;
+    const cards = document.querySelectorAll('.card-wrap');
+    if (cards[idx]) cards[idx].classList.toggle('flipped');
+  }
+  else if (e.key === '6') {
+    const ac = document.getElementById('author-card');
+    if (ac) ac.classList.toggle('flipped');
+  }
+});
+</script>
+</body>
+</html>
