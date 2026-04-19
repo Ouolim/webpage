@@ -50,11 +50,19 @@ body {
 }
 
 .nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--text);
     text-decoration: none;
     letter-spacing: -0.02em;
+}
+
+.nav__icon {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .nav__links {
