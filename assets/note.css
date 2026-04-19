@@ -1,96 +1,69 @@
-/* General Styles */
-body {
-    background-color: #121212;
-    color: #e0e0e0;
-    font-family: "Inter", sans-serif;
-    line-height: 1.6;
+/* ── Note-specific styles (extends style.css) ── */
+
+.page article {
+    line-height: 1.8;
 }
 
-a {
-    color: #80c4ff;
+.page a {
+    color: var(--accent);
     text-decoration: none;
 }
 
-a:hover {
+.page a:hover {
     text-decoration: underline;
 }
 
-/* Styling for Pandoc macros */
+/* Pandoc admonitions */
 .definition, .theorem, .warning, .proof, .example, .exercise {
-    border-radius: 10px;
-    padding: 15px;
-    margin: 15px 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-left: 5px solid;
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+    border-left: 4px solid;
+    background: var(--surface);
 }
 
-/* Definitions */
-.definition {
-    background-color: #1e1e2e;
-    border-color: #89b4fa;
-}
+.definition  { border-color: #7c8aff; }
+.theorem     { border-color: #6ee7b7; font-weight: bold; }
+.warning     { border-color: #f38ba8; font-weight: bold; }
+.proof       { border-color: #c4b5fd; font-style: italic; }
+.example     { border-color: #fbbf24; }
+.exercise    { border-color: #f87171; font-weight: bold; }
 
-/* Theorems */
-.theorem {
-    background-color: #1b292f;
-    border-color: #94e2d5;
-    font-weight: bold;
-}
-
-/* Warnings (Paradoxes, Important Notes) */
-.warning {
-    background-color: #2b1e1e;
-    border-color: #f38ba8;
-    font-weight: bold;
-}
-
-/* Proofs */
-.proof {
-    background-color: #201e2b;
-    border-color: #cba6f7;
-    font-style: italic;
-}
-
-/* Examples */
-.example {
-    background-color: #2e251b;
-    border-color: #fab387;
-}
-
-/* Exercises */
-.exercise {
-    background-color: #2e1b1b;
-    border-color: #f7768e;
-    font-weight: bold;
-}
-
-/* Code Blocks */
+/* Code */
 pre {
-    background-color: #1e1e1e;
-    padding: 10px;
-    border-radius: 8px;
+    background: var(--surface);
+    padding: 1rem;
+    border-radius: var(--radius);
     overflow-x: auto;
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
 }
 
+/* Inline math */
 .inline-math {
-    background-color: #2b2b2b;
-    padding: 2px 5px;
+    background: var(--surface);
+    padding: 2px 6px;
     border-radius: 4px;
-    color: #e0e0e0;
     font-size: 1.05em;
 }
 
+/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #1e1e1e;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 1rem 0;
 }
 
 th, td {
-    padding: 10px;
-    border: 1px solid #444;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    text-align: left;
 }
 
 th {
-    background-color: #2b2b2b;
+    background: var(--surface-hover);
+    font-weight: 600;
 }

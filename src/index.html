@@ -2,48 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ouolim | Homepage</title>
-    <link rel="stylesheet" href="/assets/global.css">
-    <link rel="stylesheet" href="/assets/header.css">
-    <link rel="stylesheet" href="/assets/navigation.css">
-    <link rel="stylesheet" href="/assets/content.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouolim</title>
+    <link rel="stylesheet" href="/assets/style.css">
 </head>
 
 <body>
-<header>
-    <div class="header__container">
-        <img src="/static/pfp.JPG" alt="Já" class="header__image">
-        <div class="header__about">
-            <h1> Janek Hlavatý</h1>
-            Hi!
-            I am from České Budějovice, and I am studying my fourth semester at Matfyz.
-            In my free time, I program, organize scout and other camps for younger generations, drink coffee, and exercise.
-            Among other things, I like music, books, hookahs, and cafés + teahouses.
-            If needed, feel free to contact me.
-        </div>
-        <img src="/static/logo.svg" alt="Já" class="header__image">
-    </div>
-</header>
 
-<nav>
-    <ul class="nav__container">
-        <li class="nav_item"><a href="/pages/contacts.html">Kontakt</a></li>
-        <li class="nav_item"><a href="/static/cv.pdf"><div id="CV">CV</div></a>
-        </li>
-    </ul>
+<nav class="nav">
+    <a href="/" class="nav__logo">ouolim</a>
+    <div class="nav__links">
+        <a href="/pages/contacts.html">kontakt</a>
+        <a href="/static/cv.pdf" class="nav__btn">CV</a>
+    </div>
 </nav>
 
-<article class="body__content">
-    <section class="notes">
-        <h2>Notes from MFFUK</h2>
-        Most of the notes are a work in progress, and for a large subset (not necessarily a strict one), I do not plan to do any further work.    </section>
-    <section>
-		<h3><a href="/notes/temno.html">Teorie množin</a></h3>
-		<h3><a href="/notes/kombagra2.html">Kombagra 2</a></h3>
+<main>
+    <section class="hero">
+        <div class="hero__visual">
+            <div class="hero__glow"></div>
+            <img src="/static/pfp.JPG" alt="Janek Hlavatý" class="hero__avatar">
+        </div>
+        <div class="hero__text">
+            <h1>Janek Hlavatý</h1>
+            <p class="hero__tagline">student @ matfyz · scout leader · coffee enthusiast</p>
+            <p class="hero__bio">
+                Based in České Budějovice. I program, organize camps for younger generations,
+                and enjoy music, books, hookahs, and good cafés.
+            </p>
+            <div class="hero__links">
+                <a href="mailto:ouolim@eideo.cz" class="pill">ouolim@eideo.cz</a>
+                <a href="https://github.com/Ouolim" class="pill pill--ghost">GitHub</a>
+            </div>
+        </div>
     </section>
-</article>
 
+    <section class="notes">
+        <h2 class="section__title">Notes from MFF UK</h2>
+        <p class="section__desc">
+            Most are a work in progress. For a large subset (not necessarily strict), I don't plan further work.
+        </p>
+        <div class="card-grid">
+            <a href="/notes/temno.html" class="card">
+                <span class="card__icon">&forall;</span>
+                <h3>Teorie množin</h3>
+                <p>Set theory</p>
+            </a>
+            <a href="/notes/kombagra2.html" class="card">
+                <span class="card__icon">&cap;</span>
+                <h3>Kombagra 2</h3>
+                <p>Combinatorics &amp; graph theory</p>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Janek Hlavatý</p>
+</footer>
 
 </body>
 </html>

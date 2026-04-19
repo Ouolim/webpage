@@ -11,7 +11,7 @@ RUN mkdir -p out/notes && \
             --lua-filter=templates/wrap_inline_math.lua \
             --template=templates/template.html \
             -o "out/notes/$filename.html" \
-            --mathjax \
+            --mathml \
             --metadata title="$filename"; \
     done
 

@@ -2,38 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$title$</title>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="/assets/global.css">
-    <link rel="stylesheet" href="/assets/header.css">
-    <link rel="stylesheet" href="/assets/navigation.css">
-    <link rel="stylesheet" href="/assets/content.css">
+    <link rel="stylesheet" href="/assets/style.css">
     <link rel="stylesheet" href="/assets/note.css">
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-          "HTML-CSS": {
-            styles: {
-              ".MathJax_Display": {
-                "text-align": "left",
-                "margin": "0",
-                "padding": "0"
-              }
-            }
-          },
-          displayAlign: "left",
-          displayIndent: "0"
-        });
-    </script>
-
 </head>
 <body>
-    <div class="body__content">
-        <nav class="nav__container">
-            <a href="/">Zpět</a>
-        </nav>
-        <article>
+    <nav class="nav">
+        <a href="/" class="nav__logo">ouolim</a>
+        <div class="nav__links">
+            <a href="/pages/contacts.html">kontakt</a>
+            <a href="/static/cv.pdf" class="nav__btn">CV</a>
+        </div>
+    </nav>
+
+    <main>
+        <article class="page">
             $body$
         </article>
-    </div>
+    </main>
 </body>
 </html>
