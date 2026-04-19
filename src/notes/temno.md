@@ -123,7 +123,7 @@ Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
     - usage: $\{x, x \in a \land \psi(x)\}$ shorter version: $\{x \in a; \psi(x)\}$
     - definition of set operators using Separation:
         - $a \cup b = \{x \in a; x \in b\}$
-        - $a \\ b = \{x \in a; x \notin b\}$
+        - $a \setminus b = \{x \in a; x \notin b\}$
         - $\emptyset = \{x \in a; x \neq x\}$ - *a* can be any set
 :::
 
@@ -151,12 +151,12 @@ Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
 :::definition
 5. **Axiom of union** - "union over the elements of a set is a set"
     - for any set of sets F \{\displaystyle \{\mathcal \{F\}\}\}, there is a set A \{\displaystyle A\} containing every element that is a member of some member of F \{\displaystyle \{\mathcal \{F\}\}\}
-    - $\forall \mathcall\{F\} \exists A \forall Y \forall x [(x \in Y \land Y \in mathcal\{F\}) \imples x \in A]$
+    - $\forall \mathcal{F} \exists A \forall Y \forall x [(x \in Y \land Y \in \mathcal{F}) \implies x \in A]$
 :::
 
 :::definition
 6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
-    - $\forall x \exists y \forall z (z \subsetq x \implies z \in y)$
+    - $\forall x \exists y \forall z (z \subseteq x \implies z \in y)$
 :::
 
 HERE INSERT HONZA 3
@@ -186,7 +186,7 @@ Examples of ordering
 - (R^2 (complex numbers), <=_{lex})
 
 :::definiton
-R is an ordering on class A, let X \subsetq A
+R is an ordering on class A, let X \subseteq A
 We say that a \in A is (with respect to R and A)
 - majaorant (upper bound) - majoranta, horní mez
 of the class X if $(\forall x in X)(x \in_r a)$
@@ -216,11 +216,11 @@ X is lower set in A if (\forall x \in X)(\forall y \in A)(y <=_r x \implies y \i
 - x \in A, then (\implies, x] is {y, y\in A \and y <=_R x} - principal ideal determined by x
 
 :::observation
-R is an ordering on A, then for arbitrary x, y \in A we have x <=_R y \eqv (\implies, y] \subsetq [\implies, y]
+R is an ordering on A, then for arbitrary x, y \in A we have x <=_R y \eqv (\implies, y] \subseteq [\implies, y]
 :::
 
 remark construction of R from Q: Dedekind's cuts:
-x \subsetq : X is a lower set with respect to classical ordering and if sup(x) exists then sup(X) \in X
+x \subseteq : X is a lower set with respect to classical ordering and if sup(x) exists then sup(X) \in X
 for example Q prunik s (-inf, q) is not a ded. cut
 Q prunik s (-inf, q] is a ded. cut
 Q prunik s (-inf, square root of 2] is a ded. cut
@@ -231,7 +231,7 @@ every nonempty subset of A has a smallest element with respect to R
 :::
 
 Exercise: weire this definition using a formula
-observation: well ordering is a hereditary property (IF b \subsetq A then R is well ordering also on B)
+observation: well ordering is a hereditary property (IF b \subseteq A then R is well ordering also on B)
 Observation: every well ordering is linear
 
 exercise: find some sets on which E sjednoceno Id is a Well ordering

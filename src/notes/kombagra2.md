@@ -12,10 +12,10 @@
 - pro bipartitní jednoduchý - Hallova podmínka
 - obecně? - idk, maybe. maybe yes, maybe not.
 - pro graf G **odd(G)** je počet lichých komponent
-- **Tutteho věta:** graf *G* má PP (hihi) každý *A* z vrcholy *G* : $odd(G \\ A) <= |A|$
+- **Tutteho věta:** graf *G* má PP (hihi) každý *A* z vrcholy *G* : $odd(G \setminus A) \leq |A|$
     dukaz:
         -$(\implies)$ každá lichá komponenta v G \\ A má v PP hranu do A
-        -$(\leftArrow)$ indukcí podle počtu nehran:
+        -$(\Leftarrow)$ indukcí podle počtu nehran:
             1.) pokud G je klika: easy 
             2.) G není klika, S = \{v z V(G) | V je spojená s každým V(G) \\ v\}
                 a) každá komponenta G \\ S je klika
