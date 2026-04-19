@@ -103,11 +103,18 @@ Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
 - how does the $\in$ behaves and which sets exists
 - formally 1. - 8. axioms form the Zermelo–Fraenkel theory (**ZF**) and adding the 9th axiom (Choice) creates extended theory called **ZFC**
 
+:::definition
 1. **Axiom of existence** - "a set exists"
     - $\exists x: x = x$
     - i dont fcking know why this shit is here
+:::
+
+:::definition
 2. **Axiom of extensionality** - "a set is determined by its elements"
     - $\forall x \forall y [\forall z (z \in x \iff z \in y) \implies x = y ]$
+:::
+
+:::definition
 3. **Axiom of separation** - "we can take all elements from set that are of target properties"
     - $\forall z \forall \omega \exists y \forall x [x \in y \iff ((x \in y) \land \psi(x, \omega, z))]$
     - also know as Axiom of specification
@@ -118,7 +125,9 @@ Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
         - $a \cup b = \{x \in a; x \in b\}$
         - $a \\ b = \{x \in a; x \notin b\}$
         - $\emptyset = \{x \in a; x \neq x\}$ - *a* can be any set
+:::
 
+:::definition
 4. **Axiom of pairing** - "for every pair of sets *a*, *b*, there exists *z*, whose elements are exactly *a* and *b*"
     - $\forall x \forall y \exists z ((x \in z) \land (y \in z))$
     - Def.: **unordered pair**: simply a set of size two
@@ -126,20 +135,29 @@ Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
     - Def.: **ordered pair**: gradually increasing set of sets with elements from the pair
         - example: $(a, b) = \{\{a\}, \{a, b\}\}$
         - beware: $(a, a) = \{\{a\}, \{a, a\}\} = \{\{a\}, \{a\}\} = \{\{a\}\}$
+:::
+
+:::proof
     - **lemma:** $(x, y) = (u, v) \iff (x = u \land y = v)$
         - proof:
             -$(\Leftarrow)$ if $x = u$ then $\{x\} = \{u\}$ from Extensionality
-                            and if $y = v$ then $\{x, y\} = \{u, v\} \implies \{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$ 
+                            and if $y = v$ then $\{x, y\} = \{u, v\} \implies \{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$
             - $(\Rightarrow)$ if $\{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$, then $\{x\} = \{u\}$ or $\{x\} = \{u, v\}$, either way $u = x$
                 - $\{u, v\} = \{x\}$ or $\{u, v\} = \{x, y\}$, therefore either $\{v = x\}$ or $\{v = y\}$
                     - if $v = y$ then we're done
                     - if $v = x$ then $v = u = x = y$ and we're done as well
+:::
+
+:::definition
 5. **Axiom of union** - "union over the elements of a set is a set"
     - for any set of sets F \{\displaystyle \{\mathcal \{F\}\}\}, there is a set A \{\displaystyle A\} containing every element that is a member of some member of F \{\displaystyle \{\mathcal \{F\}\}\}
     - $\forall \mathcall\{F\} \exists A \forall Y \forall x [(x \in Y \land Y \in mathcal\{F\}) \imples x \in A]$
+:::
+
+:::definition
 6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
     - $\forall x \exists y \forall z (z \subsetq x \implies z \in y)$
-
+:::
 
 HERE INSERT HONZA 3
 
