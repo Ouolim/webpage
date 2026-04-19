@@ -1,7 +1,41 @@
 /* ── Note-specific styles (extends style.css) ── */
 
-.page article {
+/* ── Typography ── */
+.page {
     line-height: 1.8;
+    font-size: 1rem;
+}
+
+.page h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: -0.02em;
+}
+
+.page h1:first-child {
+    margin-top: 0;
+}
+
+.page h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 2rem 0 0.8rem;
+    color: var(--text);
+}
+
+.page h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.6rem;
+    color: var(--text);
+}
+
+.page p {
+    margin: 0.6rem 0;
+    color: var(--text);
 }
 
 .page a {
@@ -13,52 +47,120 @@
     text-decoration: underline;
 }
 
-/* Pandoc admonitions */
+/* ── Lists ── */
+.page ul, .page ol {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.page ul {
+    list-style: disc;
+}
+
+.page ul ul {
+    list-style: circle;
+}
+
+.page ul ul ul {
+    list-style: square;
+}
+
+.page ol {
+    list-style: decimal;
+}
+
+.page li {
+    margin: 0.3rem 0;
+    color: var(--text);
+}
+
+.page li::marker {
+    color: var(--text-muted);
+}
+
+/* ── Strong / Em ── */
+.page strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.page em {
+    color: var(--accent);
+    font-style: italic;
+}
+
+/* ── Pandoc fenced divs (admonitions) ── */
 .definition, .theorem, .warning, .proof, .example, .exercise {
     border-radius: var(--radius);
     padding: 1.2rem 1.5rem;
     margin: 1.2rem 0;
     border-left: 4px solid;
     background: var(--surface);
-}
-
-.definition  { border-color: #7c8aff; }
-.theorem     { border-color: #6ee7b7; font-weight: bold; }
-.warning     { border-color: #f38ba8; font-weight: bold; }
-.proof       { border-color: #c4b5fd; font-style: italic; }
-.example     { border-color: #fbbf24; }
-.exercise    { border-color: #f87171; font-weight: bold; }
-
-/* Code */
-pre {
-    background: var(--surface);
-    padding: 1rem;
-    border-radius: var(--radius);
-    overflow-x: auto;
     border: 1px solid var(--border);
-    font-size: 0.9rem;
 }
 
-/* Inline math */
-.inline-math {
-    background: var(--surface);
-    padding: 2px 6px;
-    border-radius: 4px;
+.definition  { border-left: 4px solid #7c8aff; }
+.theorem     { border-left: 4px solid #6ee7b7; }
+.warning     { border-left: 4px solid #f38ba8; }
+.proof       { border-left: 4px solid #c4b5fd; }
+.example     { border-left: 4px solid #fbbf24; }
+.exercise    { border-left: 4px solid #f87171; }
+
+.definition ul, .theorem ul, .warning ul,
+.proof ul, .example ul, .exercise ul {
+    margin: 0.3rem 0;
+}
+
+/* ── Math ── */
+math {
     font-size: 1.05em;
 }
 
-/* Tables */
+math[display="block"] {
+    display: block;
+    margin: 1rem 0;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+}
+
+/* ── Code ── */
+pre {
+    background: var(--surface);
+    padding: 1rem 1.2rem;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    margin: 1rem 0;
+    line-height: 1.5;
+}
+
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.9em;
+    background: var(--surface);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+}
+
+/* ── Tables ── */
 table {
     width: 100%;
     border-collapse: collapse;
     background: var(--surface);
     border-radius: var(--radius);
     overflow: hidden;
-    margin: 1rem 0;
+    margin: 1.2rem 0;
+    font-size: 0.9rem;
 }
 
 th, td {
-    padding: 0.75rem 1rem;
+    padding: 0.6rem 1rem;
     border: 1px solid var(--border);
     text-align: left;
 }
@@ -66,4 +168,21 @@ th, td {
 th {
     background: var(--surface-hover);
     font-weight: 600;
+}
+
+/* ── Blockquotes ── */
+.page blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 1rem 0;
+    padding: 0.5rem 1.2rem;
+    background: var(--surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--text-muted);
+}
+
+/* ── Horizontal rules ── */
+.page hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
 }
