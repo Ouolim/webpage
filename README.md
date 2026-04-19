@@ -1,18 +1,19 @@
-# Janek Hlavatý's Personal Webpage
+# Personal Webpage
 
-This repository contains the source code for my personal webpage.
+Source code for my personal webpage. Notes are written in Markdown and converted to HTML via pandoc.
 
-## Building the Webpage
-Page is accessible [here](https://ouolim.github.io/webpage/)
+## Structure
 
-To build and run the webpage locally:
-- clone the repository
 ```
-git clone https://github.com/Ouolim/webpage.git
-cd webpage
+assets/          CSS
+src/
+  index.html     Main page
+  pages/         Static HTML pages
+  notes/         Markdown notes (built with pandoc)
+  templates/     Pandoc template + lua filter
+static/          File sharing (gitignored, server-only)
 ```
-- build the site
-```
-    ./generate.sh
-```
-- open docs/index.html 
+
+## Deployment
+
+The site is deployed via Docker (nginx + pandoc build stage) behind Traefik. The `Dockerfile` and `docker-compose.yml` live on the server, not in this repo.

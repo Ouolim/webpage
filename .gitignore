@@ -1,5 +1,4 @@
 .idea/
 docs/
 static/
-Dockerfile
 docker-compose.yml
