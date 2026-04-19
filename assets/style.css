@@ -26,7 +26,7 @@
 }
 
 html {
-    font-size: 16px;
+    font-size: 18px;
     scroll-behavior: smooth;
 }
 
@@ -45,7 +45,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 2rem;
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
@@ -89,7 +89,7 @@ body {
 
 /* ── Main ── */
 main {
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem 4rem;
 }
@@ -117,8 +117,8 @@ main {
 
 .hero__avatar {
     position: relative;
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--border);
@@ -163,7 +163,7 @@ main {
     font-weight: 500;
     text-decoration: none;
     background: var(--accent);
-    color: #0a0a0c !important;
+    color: #0a0a0c;
     transition: opacity 0.2s;
 }
 
@@ -267,13 +267,13 @@ main {
     color: var(--text);
 }
 
-.page__body a {
+.page__body a:not(.pill) {
     color: var(--accent);
 }
 
 /* ── Footer ── */
 footer {
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 2rem;
     border-top: 1px solid var(--border);
