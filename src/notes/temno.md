@@ -2,242 +2,250 @@
 from: markdown+fancy_lists
 ---
 
-# Temno
-- [Odkaz do sisu](https://is.cuni.cz/studium/rozvrhng/roz_predmet_macro.php?id=2b7012c4bbb3cbb6b20a1246bebbbbdd&tid=&skr=2024&sem=2&fak=11320&predmet=NAIL063)
+# Set Theory (Temno)
 
-# Outline přednášky (not in order)
-- transifinitní indukce????
-- axiom výběru + důsledky (Zornovo lemma - princip maximality)
-- Hlavním cílem:
-	- budování matematiky na pevných základech
-	- "nekonečna"
-	- problém existence nealgebraických reálných čísel
-	- Bijekce mezi úsečkou a čtvercem? xd
-	- prinicp kompaktnosti
-	- banach-tarského paradox
-- Pokračování: nekonečné množiny (NMAI074) - na to zapomeň tpč
+- [SIS link](https://is.cuni.cz/studium/rozvrhng/roz_predmet_macro.php?id=2b7012c4bbb3cbb6b20a1246bebbbbdd&tid=&skr=2024&sem=2&fak=11320&predmet=NAIL063)
 
-## Stručná historie (asi useless ale chce se mi něco psát)
-- Bernard Bolzano (1781-1848) - "Množina"
-- George Cantor (1845 - 1918) - "Aktuální nekonečno", diagonální metoda, kardinální čísla, uzavřená množina
-- pojem množina byl chápán intuitivně - souhrn určitých a různých objektů -> prvky jsou různé, určité
+## Lecture outline
+
+- Transfinite induction
+- Axiom of choice + consequences (Zorn's lemma, maximality principle)
+- Main goals:
+	- building mathematics on solid foundations
+	- "infinities"
+	- existence of non-algebraic real numbers
+	- bijection between a line segment and a square
+	- compactness principle
+	- Banach-Tarski paradox
+- Continuation: Infinite sets (NMAI074)
+
+## Brief history
+
+- Bernard Bolzano (1781–1848) — concept of "set" (množina)
+- Georg Cantor (1845–1918) — actual infinity, diagonal method, cardinal numbers, closed sets
+- The concept of a set was understood intuitively — a collection of definite, distinct objects
+
 ::: warning
-- Bertrano Russel - Russelův paradox, paradox holiče
-	- když holič holí všechny lidi kteří se neholí sami, holí sám sebe?
-	- $a=\{x,x\notin x\}$, platí $a\in a$?
-	- nemá řešení,
-		- pokud je a v a, tak není v a
-		- pokud a není v a, tak je v a
-	- problém je v objektu, nemůže to být množina
-	- poučení: ne všechno co se dá definovat, tak ve skutečnosti existuje
+**Russell's paradox** (barber paradox)
+
+- If a barber shaves everyone who doesn't shave themselves — does he shave himself?
+- $a = \{x \mid x \notin x\}$, does $a \in a$?
+- No solution:
+	- if $a \in a$, then $a \notin a$
+	- if $a \notin a$, then $a \in a$
+- The problem is the object — it cannot be a set
+- **Lesson:** not everything that can be defined actually exists
 :::
 
 ::: warning
-- Beeriho paradox
-	- nechť $m$ je nejmenší přirozené číslo které nejde definovat méně než 100 znaky -
-	- ${27}^{100}$ různých definic - maximálně tolik čísel, ale ta věta má méně než 100 písmen
-	- poučení: ne vše co se dá napsat má matematický smysl
+**Berry's paradox**
+
+- Let $m$ be the smallest natural number that cannot be defined in fewer than 100 characters
+- $27^{100}$ possible definitions — at most that many numbers, but the sentence itself has fewer than 100 characters
+- **Lesson:** not everything that can be written has mathematical meaning
 :::
 
-# Zermelo-fraenkelova teorie
-- zavedli axiomatickou teorii množin
+# Zermelo-Fraenkel set theory
+
+- Introduced axiomatic set theory
 - Idea:
-	- množiny jsou jediné "předměty", které mohou být prvky množin
-	- množiny se konstruují postupně z prázdné množiny nějakými operacemi
+	- sets are the only "objects" that can be elements of sets
+	- sets are constructed gradually from the empty set by certain operations
 
-- Jazyk teorie množin
-	- dvě úrovně "běžného jazyka"
-		- jazyk teorie "$x \in y$"
-		- metajazyk "důkaz je příliš dlouhý", "definovat", "formule"
-	- jazyk se skládá ze **symbolů**
-		- proměnné pro množiny, $x$, $y$, $x_1$ ...
-		- binární predikátový (relační) symbol rovnosti =, náležení $\in$
-		- logické spojky - negace, disjunkce, konjunkce, ->, <->
-		- kvantifikátory - obecný, existenční
-		- závorky- (), []
-	- **Formule**
-		- atomické, $x=y$, $x\in y$
-		- jsou li $\phi$,$\psi$ formule v metajazyce, pak $\lnot\phi$ i $\phi\oplus\psi$, $\oplus\in\{\lnot,\land,\lor,\implies,\iff\}$ jsou formule
-		- je li $\psi$ formule, x proměnná pak, $(\forall x)\psi$, $(\exists x)\psi$ jsou formule - vázaný/volný výskyt x
-		- každá formule lze dostat z atomických formulí aplikací konečně mnoha pravidel výše
-	- jazyk není minimální
-	- **Rozšíření jazyka** (zkratky) pro teorii množin
-		- $x \neq y := \neg(x=y)$
-		- $x\notin y := \neg(x\in y)$
-		- $x \subseteq y :=$ x je podmnožina y
-			- $(\forall u)(u\in x \implies u\in y)$
-		- $x \subset y :=$ x je vlastní podmnožina y
-			- $x\subseteq y \land x\neq y$
-		- časem $\cup, \cap, \setminus, \{x_1,...,x_n\}, \emptyset, \{x \in a | \phi(x)\}$
+## Language of set theory
 
-::: exercise
-Cvičení: napiš definici prázdné množiny
-:::
-
-## Axiomy "jak se chovají logické symboly"
-- axiomy výrokové logiky - $\implies, \neg$
-	-např. schéma axiomů: jsou li $\phi, \psi$ formule, pak $\phi \implies (\psi \implies\phi)$ je axiom
-- axiomy predikátové logiky - $\forall, \exists$
-	- jsou li jsou li $\phi, \psi$ formule, $x$ proměnná, x není volná v $\phi$, pak $(\forall x)(\phi\implies\psi)\implies(\phi\implies(\forall x)\psi)$
-- axiomy rovnosti
-	- pokud x je proměnná, pak $x=x$
-	- x,y,z jsou proměnné, R je relační symbol, pak $(x=y) \implies (\forall z)(R(x,z)\iff R(y,z))$ - axiom substituce
-	- speciálně v TM za R můžeme dosadit $\in$, pak $(x=y) \implies (\forall z)(x\in y\iff y \in z)$
-	- $(x=y) \implies (\forall z)(z\in x\iff z \in y)$
-
-## Deduction rules (informally):
-
-- from $\psi$ and $\psi \implies \phi$, deduce $\phi$
-- from $\psi$ deduce $(\forall x)\psi$
+- Two levels of "ordinary language":
+	- language of the theory: "$x \in y$"
+	- metalanguage: "the proof is too long", "define", "formula"
+- The language consists of **symbols**:
+	- variables for sets: $x$, $y$, $x_1$, ...
+	- binary predicate (relation) symbol for equality $=$, membership $\in$
+	- logical connectives: $\lnot$, $\lor$, $\land$, $\implies$, $\iff$
+	- quantifiers: $\forall$, $\exists$
+	- parentheses: $()$, $[]$
+- **Formulas:**
+	- atomic: $x = y$, $x \in y$
+	- if $\phi$, $\psi$ are formulas, then $\lnot\phi$ and $\phi \oplus \psi$ (where $\oplus \in \{\lnot, \land, \lor, \implies, \iff\}$) are formulas
+	- if $\psi$ is a formula and $x$ a variable, then $(\forall x)\psi$ and $(\exists x)\psi$ are formulas — bound/free occurrence of $x$
+	- every formula can be obtained from atomic formulas by finitely many applications of the rules above
+- The language is not minimal
+- **Language extensions** (abbreviations) for set theory:
+	- $x \neq y := \neg(x = y)$
+	- $x \notin y := \neg(x \in y)$
+	- $x \subseteq y$ := $x$ is a subset of $y$: $(\forall u)(u \in x \implies u \in y)$
+	- $x \subset y$ := $x$ is a proper subset of $y$: $x \subseteq y \land x \neq y$
+	- eventually $\cup, \cap, \setminus, \{x_1, \ldots, x_n\}, \emptyset, \{x \in a \mid \phi(x)\}$
 
 ::: exercise
-Cvičení: dokažte že $((x\subseteq y)\land(y\subset z)) \implies x\subset z$
+**Exercise:** write the definition of the empty set
 :::
 
-## Deduction rules (informally):
-- from $\psi$ and $\psi \implies \phi$, deduce $\phi$
-- from $\psi$ deduce $(\forall x)\psi$
+## Axioms for logical symbols
 
-### Axioms of set theory:
+- Axioms of propositional logic ($\implies$, $\neg$):
+	- e.g. axiom schema: if $\phi$, $\psi$ are formulas, then $\phi \implies (\psi \implies \phi)$ is an axiom
+- Axioms of predicate logic ($\forall$, $\exists$):
+	- if $\phi$, $\psi$ are formulas, $x$ a variable, $x$ not free in $\phi$, then $(\forall x)(\phi \implies \psi) \implies (\phi \implies (\forall x)\psi)$
+- Axioms of equality:
+	- if $x$ is a variable, then $x = x$
+	- $x$, $y$, $z$ are variables, $R$ a relation symbol, then $(x = y) \implies (\forall z)(R(x, z) \iff R(y, z))$ — substitution axiom
+	- in set theory, substituting $\in$ for $R$: $(x = y) \implies (\forall z)(x \in z \iff y \in z)$
+	- $(x = y) \implies (\forall z)(z \in x \iff z \in y)$
 
-- how does the $\in$ behaves and which sets exists
-- formally 1. - 8. axioms form the Zermelo–Fraenkel theory (**ZF**) and adding the 9th axiom (Choice) creates extended theory called **ZFC**
+## Deduction rules
 
-:::definition
-1. **Axiom of existence** - "a set exists"
-    - $\exists x: x = x$
-    - i dont fcking know why this shit is here
+- From $\psi$ and $\psi \implies \phi$, deduce $\phi$ (modus ponens)
+- From $\psi$, deduce $(\forall x)\psi$ (generalization)
+
+::: exercise
+**Exercise:** prove that $((x \subseteq y) \land (y \subset z)) \implies x \subset z$
 :::
 
-:::definition
-2. **Axiom of extensionality** - "a set is determined by its elements"
-    - $\forall x \forall y [\forall z (z \in x \iff z \in y) \implies x = y ]$
+## Axioms of set theory
+
+- Determine how $\in$ behaves and which sets exist
+- Axioms 1–8 form Zermelo-Fraenkel theory (**ZF**); adding axiom 9 (choice) gives **ZFC**
+
+::: definition
+**1. Axiom of existence** — "a set exists"
+
+$\exists x : x = x$
 :::
 
-:::definition
-3. **Axiom of separation** - "we can take all elements from set that are of target properties"
-    - $\forall z \forall \omega \exists y \forall x [x \in y \iff ((x \in y) \land \psi(x, \omega, z))]$
-    - also know as Axiom of specification
-    - dissallows possibilites of self-reference and paradox connected with these problems
-    - thanks to Extensionality there exists only one such set
-    - usage: $\{x, x \in a \land \psi(x)\}$ shorter version: $\{x \in a; \psi(x)\}$
-    - definition of set operators using Separation:
-        - $a \cup b = \{x \in a; x \in b\}$
-        - $a \setminus b = \{x \in a; x \notin b\}$
-        - $\emptyset = \{x \in a; x \neq x\}$ - *a* can be any set
+::: definition
+**2. Axiom of extensionality** — "a set is determined by its elements"
+
+$\forall x \forall y [\forall z (z \in x \iff z \in y) \implies x = y]$
 :::
 
-:::definition
-4. **Axiom of pairing** - "for every pair of sets *a*, *b*, there exists *z*, whose elements are exactly *a* and *b*"
-    - $\forall x \forall y \exists z ((x \in z) \land (y \in z))$
-    - Def.: **unordered pair**: simply a set of size two
-        - such as $\{a, b\}$ or $\{a, a\} = \{a\}$
-    - Def.: **ordered pair**: gradually increasing set of sets with elements from the pair
-        - example: $(a, b) = \{\{a\}, \{a, b\}\}$
-        - beware: $(a, a) = \{\{a\}, \{a, a\}\} = \{\{a\}, \{a\}\} = \{\{a\}\}$
+::: definition
+**3. Axiom of separation** — "we can take all elements from a set that satisfy a given property"
+
+$\forall z \forall \omega \exists y \forall x [x \in y \iff ((x \in z) \land \psi(x, \omega, z))]$
+
+- Also known as axiom of specification
+- Disallows self-reference and related paradoxes
+- By extensionality, there exists exactly one such set
+- Notation: $\{x \in a \mid \psi(x)\}$
+- Set operations via separation:
+	- $a \cap b = \{x \in a \mid x \in b\}$
+	- $a \setminus b = \{x \in a \mid x \notin b\}$
+	- $\emptyset = \{x \in a \mid x \neq x\}$ — $a$ can be any set
 :::
 
-:::proof
-    - **lemma:** $(x, y) = (u, v) \iff (x = u \land y = v)$
-        - proof:
-            -$(\Leftarrow)$ if $x = u$ then $\{x\} = \{u\}$ from Extensionality
-                            and if $y = v$ then $\{x, y\} = \{u, v\} \implies \{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$
-            - $(\Rightarrow)$ if $\{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$, then $\{x\} = \{u\}$ or $\{x\} = \{u, v\}$, either way $u = x$
-                - $\{u, v\} = \{x\}$ or $\{u, v\} = \{x, y\}$, therefore either $\{v = x\}$ or $\{v = y\}$
-                    - if $v = y$ then we're done
-                    - if $v = x$ then $v = u = x = y$ and we're done as well
+::: definition
+**4. Axiom of pairing** — "for every pair of sets $a$, $b$, there exists $z$ whose elements are exactly $a$ and $b$"
+
+$\forall x \forall y \exists z ((x \in z) \land (y \in z))$
+
+- **Unordered pair:** a set of size two, $\{a, b\}$ or $\{a, a\} = \{a\}$
+- **Ordered pair:** $(a, b) = \{\{a\}, \{a, b\}\}$
+	- note: $(a, a) = \{\{a\}, \{a, a\}\} = \{\{a\}, \{a\}\} = \{\{a\}\}$
 :::
 
-:::definition
-5. **Axiom of union** - "union over the elements of a set is a set"
-    - for any set of sets F \{\displaystyle \{\mathcal \{F\}\}\}, there is a set A \{\displaystyle A\} containing every element that is a member of some member of F \{\displaystyle \{\mathcal \{F\}\}\}
-    - $\forall \mathcal{F} \exists A \forall Y \forall x [(x \in Y \land Y \in \mathcal{F}) \implies x \in A]$
+::: proof
+**Lemma:** $(x, y) = (u, v) \iff (x = u \land y = v)$
+
+$(\Leftarrow)$: If $x = u$ then $\{x\} = \{u\}$ by extensionality. If $y = v$ then $\{x, y\} = \{u, v\}$, so $\{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$.
+
+$(\Rightarrow)$: If $\{\{x\}, \{x, y\}\} = \{\{u\}, \{u, v\}\}$, then $\{x\} = \{u\}$ or $\{x\} = \{u, v\}$. Either way, $u = x$.
+
+- $\{u, v\} = \{x\}$ or $\{u, v\} = \{x, y\}$, so either $v = x$ or $v = y$
+	- if $v = y$: done
+	- if $v = x$: then $v = u = x = y$, done as well
 :::
 
-:::definition
-6. **Axiom of the power set** - "there exists a set z, whose elements are all subsets of a"
-    - $\forall x \exists y \forall z (z \subseteq x \implies z \in y)$
+::: definition
+**5. Axiom of union** — "the union over elements of a set is a set"
+
+For any family of sets $\mathcal{F}$, there exists a set $A$ containing every element that is a member of some member of $\mathcal{F}$:
+
+$\forall \mathcal{F} \exists A \forall Y \forall x [(x \in Y \land Y \in \mathcal{F}) \implies x \in A]$
 :::
 
-HERE INSERT HONZA 3
+::: definition
+**6. Axiom of the power set** — "there exists a set $z$ whose elements are all subsets of $a$"
 
-Janek 4
+$\forall x \exists y \forall z (z \subseteq x \implies z \in y)$
+:::
+
+---
 
 # Relations
 
-:::definition
-$x<=_R y$ means $(x,y) \in R$
+::: definition
+$x \leq_R y$ means $(x, y) \in R$
 
-Ordering $R$ is linear (on A) if $R$ is a trichotmic relation (on $A$). That means that every pair of elements in $A$ is comparable.
+An ordering $R$ is **linear** (on $A$) if $R$ is a trichotomous relation on $A$ — every pair of elements in $A$ is comparable.
 :::
 
-$R'$ is a strict ordering (ostré uspořádání) if $R'$ is of the form
-$R - Id$ where R is an ordering.
+$R'$ is a **strict ordering** if $R' = R \setminus \text{Id}$, where $R$ is an ordering.
 
-- it becomes antireflexive, antisymmetric and transitive.
-- antisymmetric is implied from the other two.
+- It becomes antireflexive, antisymmetric, and transitive
+- Antisymmetry is implied by the other two
 
-$x <_{R} y$ means $(x,y) \in R$
+$x <_R y$ means $(x, y) \in R'$
 
-Examples of ordering
-- (natural numbers, <=)
-- (V, inclusion <=)
-- (natural numbers, |)
-- (R^2 (complex numbers), <=_{lex})
+**Examples of orderings:**
 
-:::definiton
-R is an ordering on class A, let X \subseteq A
-We say that a \in A is (with respect to R and A)
-- majaorant (upper bound) - majoranta, horní mez
-of the class X if $(\forall x in X)(x \in_r a)$
-- maximal element of X iff a \in X A(\forall x in X)(\not a <_R x)
-(maximální prvek)
-- maximum element (largest) of X if $a \in X$ and a is a majorant
-(největší)
-- supremum of X if a is the smallest element of the class of all majorants of X
-- smallest defined symetrically
+- $(\mathbb{N}, \leq)$
+- $(V, \subseteq)$
+- $(\mathbb{N}, \mid)$ (divisibility)
+- $(\mathbb{R}^2, \leq_{\text{lex}})$ (lexicographic)
 
-- minorant, minimal element, minumum element, infimum
+::: definition
+Let $R$ be an ordering on class $A$ and $X \subseteq A$. We say that $a \in A$ is (with respect to $R$ and $A$):
+
+- **upper bound** (majorant) of $X$, if $(\forall x \in X)(x \leq_R a)$
+- **maximal element** of $X$, if $a \in X$ and $(\forall x \in X)(\lnot(a <_R x))$
+- **maximum** (largest element) of $X$, if $a \in X$ and $a$ is an upper bound of $X$
+- **supremum** of $X$, if $a$ is the smallest element of the class of all upper bounds of $X$
+- Symmetrically: lower bound (minorant), minimal element, minimum, infimum
 :::
 
-:::observation
-maxium -> maximal, if R is linear, maximal -> maximum and there is at most one maximal
-there is alwats at most one maximum and at most one supremum
+::: theorem
+- Maximum $\implies$ maximal element
+- If $R$ is linear, then maximal $\implies$ maximum (and there is at most one maximal)
+- There is always at most one maximum and at most one supremum
 :::
 
-notation
-a = max_R(X)
-a = sup_r(X)
+**Notation:** $a = \max_R(X)$, $a = \sup_R(X)$
 
-X is bounded from above in A if there exists a majorant of X in A, similart from below (sdola)
-(shora omezená)
-X is lower set in A if (\forall x \in X)(\forall y \in A)(y <=_r x \implies y \in X) "with every element it containt all smaller elements"
-(dolní množina)
-- x \in A, then (\implies, x] is {y, y\in A \and y <=_R x} - principal ideal determined by x
+- $X$ is **bounded from above** in $A$ if there exists an upper bound of $X$ in $A$ (similarly from below)
+- $X$ is a **lower set** (downward closed) in $A$ if $(\forall x \in X)(\forall y \in A)(y \leq_R x \implies y \in X)$
+- For $x \in A$: $(\leftarrow, x] = \{y \in A \mid y \leq_R x\}$ — principal ideal determined by $x$
 
-:::observation
-R is an ordering on A, then for arbitrary x, y \in A we have x <=_R y \eqv (\implies, y] \subseteq [\implies, y]
+::: theorem
+Let $R$ be an ordering on $A$. Then for arbitrary $x, y \in A$:
+
+$x \leq_R y \iff (\leftarrow, x] \subseteq (\leftarrow, y]$
 :::
 
-remark construction of R from Q: Dedekind's cuts:
-x \subseteq : X is a lower set with respect to classical ordering and if sup(x) exists then sup(X) \in X
-for example Q prunik s (-inf, q) is not a ded. cut
-Q prunik s (-inf, q] is a ded. cut
-Q prunik s (-inf, square root of 2] is a ded. cut
+**Remark — constructing $\mathbb{R}$ from $\mathbb{Q}$: Dedekind cuts**
 
-:::definition
-ordering R on class A is a well-ordering (dobré) if
-every nonempty subset of A has a smallest element with respect to R
+$X \subseteq \mathbb{Q}$: $X$ is a lower set with respect to the standard ordering, and if $\sup(X)$ exists then $\sup(X) \notin X$
+
+- $\mathbb{Q} \cap (-\infty, q)$ is a Dedekind cut
+- $\mathbb{Q} \cap (-\infty, q]$ is not a Dedekind cut
+- $\mathbb{Q} \cap (-\infty, \sqrt{2})$ is a Dedekind cut
+
+::: definition
+An ordering $R$ on class $A$ is a **well-ordering** if every nonempty subset of $A$ has a smallest element with respect to $R$.
 :::
 
-Exercise: weire this definition using a formula
-observation: well ordering is a hereditary property (IF b \subseteq A then R is well ordering also on B)
-Observation: every well ordering is linear
+::: exercise
+**Exercise:** write this definition as a formula
+:::
 
-exercise: find some sets on which E sjednoceno Id is a Well ordering
+- Well-ordering is a hereditary property: if $B \subseteq A$, then $R$ is a well-ordering on $B$ as well
+- Every well-ordering is linear
 
+::: exercise
+**Exercise:** find sets on which $\in \cup \text{Id}$ is a well-ordering
+:::
 
-Comparing cardinalities
-(mohutnost)
-Set x has cardinality smaller than or equal to the cardinalty of Y, x <= y if there exists and indective mapping of x into y
+---
 
+## Comparing cardinalities
+
+Set $x$ has cardinality less than or equal to the cardinality of $y$ ($|x| \leq |y|$) if there exists an injective mapping from $x$ into $y$.

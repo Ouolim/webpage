@@ -1,44 +1,66 @@
-# Edmonsonův algoritmus
-
-# Kombagra II - Lekce 2
+# Kombagra II — Lekce 2
 
 ### Opakování z minula
 
-- VSC, květy, párovaní, bla bla bla
+- VSC, květy, párování
 
 ### Dnes
 
-- **perfektní párovaní** - každý vrchol je v právě jednom páru
-- pro bipartitní jednoduchý - Hallova podmínka
-- obecně? - idk, maybe. maybe yes, maybe not.
-- pro graf G **odd(G)** je počet lichých komponent
-- **Tutteho věta:** graf *G* má PP (hihi) každý *A* z vrcholy *G* : $odd(G \setminus A) \leq |A|$
-    dukaz:
-        -$(\implies)$ každá lichá komponenta v G \\ A má v PP hranu do A
-        -$(\Leftarrow)$ indukcí podle počtu nehran:
-            1.) pokud G je klika: easy 
-            2.) G není klika, S = \{v z V(G) | V je spojená s každým V(G) \\ v\}
-                a) každá komponenta G \\ S je klika
-                    - spáruju vrcholy v každé sudé komponentě
-                    - liché komponenty spáruju s vrcholem z S (hrana existuje z definice S a dost vrcholů existuje z Tutteho podmínky (resp. nemusí existovat, ale potom není maximální parovaní a pak neplatí ekvivalence))
-                    - dopáruju zbylé vrcholy z S (G má sudý počet vrcholu, vždycky vyjde)
-                b) G není klika a G \\ S má alespoň jednu komponentu, která není klika
-                    - tato komponenta buď má 2 a méně vrcholů nebo obsahuje trešničku
-                    - dále stopka trešnicky *v* má nesousední lísteček *u* (z definice S)
-                    - e1 = x, y && e2 = v u
-                    - G1 je G + e1 && G2 je G + e2
-                    - pozorovaní: pokud H vznikl z G pridaním hrany a G splňuje TP -> potom i H splňuje TP
-                    - pokud G splňuje TP pak i G1 a G2 to splňují
-                    - z IP G1 ma PP: *p1* a G2 ma PP: *p2*
-                    - pokud *p1* neobsahuje e1 || *p2* neobsahuje e2 => G má PP
-                    - uvažme H = *p1* + *p2*:
-                        - H má každý stupeň <= 2
-                        - H obsahuje pouze cykly mezi 2 vrcholy nebo střídavě kružnice
-                            I.) e1 i e2 jsou v ruzných komponentách, pak alternuju komponentu e1
-                            II.) pokud jsou ve stejné komponente - pomocí hran $\{x, v\}$ a $\{v, y\}$ zkonstrujeme nové parovaní, které nepoužívá ani e1 ani e2
+- **Perfektní párování** — každý vrchol je v právě jednom páru
+- Pro bipartitní grafy — Hallova podmínka
+- Pro graf $G$: $odd(G)$ je počet lichých komponent
 
-- **Petersenova věta**: každý 3-regularní 2-souvislý graf G ma PP
-    důkaz:
-        1.) z 2 souvislosti každá komponenta G \\ S má min. 2 hrany s S
-        2.) z 3 regularity víme, že součet hran uvnitř komponenty musí být lichý - ven musí vést lichý počet taky $\implies$ každá lichá komponenta musí mít 3 hrany do S $\implies$ musí být spojený s nějakým vrcholem $\implies$ 3-reg. = vrcholů je tolik, kolik lichých komponent
+---
 
+## Tutteho věta
+
+::: theorem
+Graf $G$ má perfektní párování $\iff$ pro každou množinu vrcholů $A$: $odd(G \setminus A) \leq |A|$
+:::
+
+::: proof
+**Důkaz:**
+
+$(\implies)$: Každá lichá komponenta v $G \setminus A$ má v PP hranu do $A$.
+
+$(\Leftarrow)$: Indukcí podle počtu nehran:
+
+**1)** Pokud $G$ je klika — triviální.
+
+**2)** $G$ není klika. Definujme $S = \{v \in V(G) \mid v \text{ je spojený s každým } V(G) \setminus \{v\}\}$.
+
+- **a)** Každá komponenta $G \setminus S$ je klika:
+	- Spárujeme vrcholy v každé sudé komponentě
+	- Liché komponenty spárujeme s vrcholem z $S$ (hrana existuje z definice $S$, dost vrcholů existuje z Tutteho podmínky)
+	- Dopárujeme zbylé vrcholy z $S$ ($G$ má sudý počet vrcholů, vždy vyjde)
+
+- **b)** $G$ není klika a $G \setminus S$ má alespoň jednu komponentu, která není klika:
+	- Tato komponenta buď má $\leq 2$ vrcholů, nebo obsahuje třešničku
+	- Stopka třešničky $v$ má nesousední lísteček $u$ (z definice $S$)
+	- Položme $e_1 = \{x, y\}$, $e_2 = \{v, u\}$
+	- $G_1 = G + e_1$, $G_2 = G + e_2$
+	- **Pozorování:** pokud $H$ vznikl z $G$ přidáním hrany a $G$ splňuje TP, pak i $H$ splňuje TP
+	- Tedy $G_1$ i $G_2$ splňují TP
+	- Z IP: $G_1$ má PP $p_1$ a $G_2$ má PP $p_2$
+	- Pokud $p_1$ neobsahuje $e_1$ nebo $p_2$ neobsahuje $e_2$ $\implies$ $G$ má PP
+	- Uvažme $H = p_1 \cup p_2$:
+		- $H$ má každý stupeň $\leq 2$
+		- $H$ obsahuje pouze cykly délky 2 nebo střídavé kružnice
+		- **I.** $e_1$ i $e_2$ jsou v různých komponentách — alternujeme komponentu $e_1$
+		- **II.** Jsou ve stejné komponentě — pomocí hran $\{x, v\}$ a $\{v, y\}$ zkonstruujeme nové párování bez $e_1$ i $e_2$
+:::
+
+---
+
+## Petersenova věta
+
+::: theorem
+Každý 3-regulární 2-souvislý graf $G$ má perfektní párování.
+:::
+
+::: proof
+**Důkaz** (ověření Tutteho podmínky):
+
+1. Z 2-souvislosti: každá komponenta $G \setminus S$ má minimálně 2 hrany do $S$
+2. Z 3-regularity: součet hran uvnitř komponenty musí být lichý, ven musí vést lichý počet $\implies$ každá lichá komponenta musí mít $\geq 3$ hrany do $S$ $\implies$ musí být spojena s alespoň 3 vrcholy $\implies$ z 3-regularity je vrcholů v $S$ alespoň tolik, kolik lichých komponent
+:::
